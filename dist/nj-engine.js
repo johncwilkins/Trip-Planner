@@ -1,0 +1,23 @@
+(function(root){
+function profile(route,cruise){if(!Number.isFinite(cruise)||cruise<1||cruise>50)throw Error('Cruise speed must be between 1 and 50 knots.');let seconds=[0];for(let i=1;i<route.points.length;i++){let a=route.points[i-1],b=route.points[i],cap=a[4]??b[4],dt=b[2]-a[2];let factor=cap==null?route.referenceCruiseKnots/cruise:Math.max(1,cap/cruise);seconds.push(seconds[i-1]+dt*factor);}return seconds;}
+function bracket(points,s,column=3){let lo=0,hi=points.length-1;if(s<=points[0][column])return[0,0,0];if(s>=points[hi][column])return[hi,hi,0];while(hi-lo>1){let m=(hi+lo)>>1;if(points[m][column]<=s)lo=m;else hi=m;}let span=points[hi][column]-points[lo][column];return[lo,hi,span?(s-points[lo][column])/span:0];}
+function secondsAt(route,profile,s){let[a,b,f]=bracket(route.points,s);return profile[a]+f*(profile[b]-profile[a]);}
+function position(route,s){let[a,b,f]=bracket(route.points,s);return {lat:route.points[a][0]+f*(route.points[b][0]-route.points[a][0]),lon:route.points[a][1]+f*(route.points[b][1]-route.points[a][1]),cap:route.points[a][4]??route.points[b][4]};}
+function passage(route,profile,start,finish,departure,bridgeDelays={}){
+ let sa=secondsAt(route,profile,start.distance),sb=secondsAt(route,profile,finish.distance),reverse=finish.distance<start.distance,totalDistance=Math.abs(finish.distance-start.distance),sign=reverse?-1:1;
+ const progress=s=>(s-start.distance)*sign;
+ let bridges=(route.bridges||[]).filter(b=>progress(b.distance)>1e-7&&progress(b.distance)<totalDistance-1e-7).map(b=>{let minutes=bridgeDelays[b.key]??b.defaultDelayMinutes??15;if(!Number.isFinite(minutes)||minutes<0||minutes>30)throw Error('Bridge delays must be between 0 and 30 minutes.');return {...b,delayMinutes:minutes,progress:progress(b.distance)};}).sort((a,b)=>a.progress-b.progress);
+ let eta=s=>departure+Math.abs(secondsAt(route,profile,s)-sa)*1000+bridges.filter(b=>b.progress<progress(s)-1e-7).reduce((sum,b)=>sum+b.delayMinutes*60000,0);
+ for(let b of bridges){b.arrival=eta(b.distance);b.clear=b.arrival+b.delayMinutes*60000;}
+ let bridgeDelayMinutes=bridges.reduce((sum,b)=>sum+b.delayMinutes,0),movingHours=Math.abs(sb-sa)/3600;
+ let stations=route.stations.filter(s=>s.distance>=Math.min(start.distance,finish.distance)-1e-6&&s.distance<=Math.max(start.distance,finish.distance)+1e-6);stations.sort((a,b)=>reverse?b.distance-a.distance:a.distance-b.distance);
+ let endpoints=route.endpoints.filter(s=>s.distance>=Math.min(start.distance,finish.distance)-1e-6&&s.distance<=Math.max(start.distance,finish.distance)+1e-6);if(reverse)endpoints.reverse();
+ return{start,finish,departure,reverse,eta,stations,endpoints,bridges,bridgeDelayMinutes,movingHours,hours:movingHours+bridgeDelayMinutes/60,end:departure+(movingHours*3600+bridgeDelayMinutes*60)*1000,distance:totalDistance};
+}
+function tide(events,t){t/=1000;let[a,b,f]=bracket(events,t,0);if(a===b)throw Error('Tide predictions do not cover this arrival.');let before=events[a],after=events[b],height=before[1]+(after[1]-before[1])*(1-Math.cos(Math.PI*f))/2;return{height,state:f<.02||f>.98?'Near '+(f<.02?before[2]:after[2])+' tide':after[1]>before[1]?'Rising':'Falling',before,after,nextHigh:events.slice(b).find(x=>x[2]==='H'),nextLow:events.slice(b).find(x=>x[2]==='L')};}
+function eastern(date,time){let a=(date+'T'+time).split(/[-T:]/).map(Number),wanted=Date.UTC(a[0],a[1]-1,a[2],a[3],a[4]),t=wanted;const f=new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'});for(let i=0;i<4;i++){let p=Object.fromEntries(f.formatToParts(t).map(x=>[x.type,x.value])),delta=wanted-Date.UTC(+p.year,+p.month-1,+p.day,+p.hour,+p.minute);t+=delta;if(!delta)return t;}throw Error('This Eastern time does not exist during the daylight-saving transition.');}
+const priorityIds=new Set(['8534393','8535221','8535661','8535838']);
+function priorityStations(stations){return stations.filter(st=>priorityIds.has(st.id));}
+function recommendationScore(passage,data){const stations=priorityStations(passage.stations);if(!stations.length)return null;return stations.map(st=>({st,height:tide(data[st.id],passage.eta(st.distance)).height})).reduce((a,b)=>a.height<b.height?a:b);}
+root.NJTide={profile,secondsAt,position,passage,tide,eastern,priorityStations,recommendationScore};if(typeof module!=='undefined')module.exports=root.NJTide;
+})(globalThis);

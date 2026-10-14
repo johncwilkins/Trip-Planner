@@ -1,0 +1,38 @@
+[
+  {
+    "key": "railroad",
+    "name": "Atlantic City railroad bridge \u00b7 NJ Transit",
+    "lat": 39.3643,
+    "lon": -74.44529,
+    "defaultDelayMinutes": 15,
+    "source": "https://www.waterwayguide.com/bridge/3-859/amtrak-njtro-bridge",
+    "distance": 41.8685659400734,
+    "routeLat": 39.36434893174073,
+    "routeLon": -74.44548354062141,
+    "projectionOffsetNm": 0.009445746981400705
+  },
+  {
+    "key": "albany",
+    "name": "Route 40 \u00b7 Albany Avenue Bridge",
+    "lat": 39.3541,
+    "lon": -74.4573,
+    "defaultDelayMinutes": 15,
+    "source": "https://www.nj.gov/transportation/refdata/traffic_orders/bridge/rt40.shtm",
+    "distance": 40.97173036993058,
+    "routeLat": 39.35369445721155,
+    "routeLon": -74.4569169970895,
+    "projectionOffsetNm": 0.030130113280552356
+  },
+  {
+    "key": "margate",
+    "name": "Margate City Bridge",
+    "lat": 39.33756666666667,
+    "lon": -74.514,
+    "defaultDelayMinutes": 15,
+    "source": "https://www.waterwayguide.com/bridge/3-854/margate-city-bridge",
+    "distance": 37.04246816004499,
+    "routeLat": 39.33756731312409,
+    "routeLon": -74.51400777500979,
+    "projectionOffsetNm": 0.00036288204214114547
+  }
+]
