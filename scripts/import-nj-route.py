@@ -38,6 +38,12 @@ for st in stations:
  q=near(st)
  if q['offsetNm']<=1.2 or st['id'] in ['8533615','8533051']:
   ss.append(dict(id=st['id'],name=st['name'],lat=st['lat'],lon=st['lng'],sub=st['type']=='S',**q))
+checkpoint_path=root/'config/nj-priority-checkpoints.json'
+if checkpoint_path.exists():
+ for st in json.load(open(checkpoint_path)):
+  q=near(dict(lat=st['lat'],lng=st['lon']))
+  source_offset=distance([st['lat'],st['lon']],[st['sourceLat'],st['sourceLon']])
+  ss.append(dict(**st,sub=True,checkpoint=True,sourceOffsetNm=round(source_offset,2),**q))
 ss.sort(key=lambda x:x['distance'])
 ends=[dict(key='cape-may',name='Cape May · Canyon Club',distance=0,lat=points[0][0],lon=points[0][1])]
 for key,name,station in [('stone-harbor','Stone Harbor','8535581'),('avalon','Avalon · Ingram Thorofare','8535451'),('sea-isle','Sea Isle · Ludlam Bay','8535221'),('ocean-city','Ocean City · north end','8534836'),('atlantic-city','Atlantic City · Absecon Channel','8534638'),('beach-haven','LBI · Beach Haven','8534208'),('lbi','LBI · Manahawkin Bridge','8533935'),('barnegat','Barnegat Inlet · ICW junction','8533631')]:

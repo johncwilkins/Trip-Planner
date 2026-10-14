@@ -144,6 +144,17 @@
     "routeLon": -74.664695
   },
   {
+    "id": "all-seasons",
+    "name": "All Seasons Marina \u00b7 Ocean City",
+    "lat": 39.25361111111111,
+    "lon": -74.62777777777777,
+    "sourceStationId": "8534975",
+    "sourceStationName": "Beesleys Point \u00b7 Great Egg Harbor Bay",
+    "sourceLat": 39.2883,
+    "sourceLon": -74.6283,
+    "locationSource": "https://pubs.usgs.gov/wdr/2005/wdr-nj-05-1/pdf/01411318.2005.sw.pdf"
+  },
+  {
     "id": "8534836",
     "name": "Longport (inside), Great Egg Harbor Inlet",
     "lat": 39.3083,
@@ -154,6 +165,17 @@
     "distance": 35.71311382721145,
     "routeLat": 39.320602,
     "routeLon": -74.529306
+  },
+  {
+    "id": "ac-railroad",
+    "name": "Atlantic City rail bridge",
+    "lat": 39.36434893174073,
+    "lon": -74.44548354062141,
+    "sourceStationId": "8534638",
+    "sourceStationName": "Absecon Channel, State Route 87 bridge",
+    "sourceLat": 39.385,
+    "sourceLon": -74.425,
+    "locationSource": "https://www.waterwayguide.com/bridge/3-859/amtrak-njtro-bridge"
   },
   {
     "id": "8534638",

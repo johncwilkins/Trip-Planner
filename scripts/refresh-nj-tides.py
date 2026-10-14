@@ -17,7 +17,7 @@ def fetch(st):
  count=0
  for group in groups:
   begin=group[0]-dt.timedelta(days=1);end=group[-1]+dt.timedelta(days=8)
-  params=dict(station=st['id'],product='predictions',datum='MLLW',interval='hilo',units='english',time_zone='gmt',format='json',begin_date=begin.strftime('%Y%m%d'),end_date=end.strftime('%Y%m%d'),application='NJInsidePassagePlanner')
+  params=dict(station=st.get('sourceStationId',st['id']),product='predictions',datum='MLLW',interval='hilo',units='english',time_zone='gmt',format='json',begin_date=begin.strftime('%Y%m%d'),end_date=end.strftime('%Y%m%d'),application='NJInsidePassagePlanner')
   url='https://api.tidesandcurrents.noaa.gov/api/prod/datagetter?'+urllib.parse.urlencode(params)
   for attempt in range(4):
    try:
@@ -30,7 +30,7 @@ def fetch(st):
     time.sleep(attempt+1)
   for a in group:
    lo=int(dt.datetime.combine(a-dt.timedelta(days=1),dt.time(),dt.timezone.utc).timestamp());hi=lo+9*86400
-   block=dict(id=st['id'],datum='MLLW',units='ft',interval='hilo',events=[x for x in rows if lo<=x[0]<=hi]);assert len(block['events'])>=28
+   block=dict(id=st['id'],sourceStationId=st.get('sourceStationId',st['id']),datum='MLLW',units='ft',interval='hilo',events=[x for x in rows if lo<=x[0]<=hi]);assert len(block['events'])>=28
    path=folder/(str(a)+'.json');temp=path.with_suffix('.tmp');temp.write_text(json.dumps(block,separators=(',',':')));temp.replace(path);count+=1
  return count
 with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:

@@ -5,6 +5,8 @@ BitterRadish coastal current and New Jersey inside tide passage planners.
 - Home: `dist/index.html`
 - Coastal currents: `dist/currents.html`
 - New Jersey inside tides: `dist/nj.html`
+- Detailed help: `dist/help.html`
+- About: `dist/about.html`
 
 Static HTML, JavaScript and saved NOAA prediction files; no server, API key or build dependencies required. The site includes the full saved cache. Chart tiles load separately from NOAA.
 
@@ -24,7 +26,7 @@ The first workflow run expands the uploaded source bundle into ordinary versione
 
 ## Calculations
 
-Currents adjust passage timing based on the changing position and time. New Jersey offshore legs have no modeled current correction. The inside tide page uses a cleaned 2022 recorded track and slow-section timing; cruise speed changes open stretches. Three adjustable bridge delays are assumptions, not opening schedules. Tide recommendations focus on Main Marsh Thorofare, Ludlam Bay, Nummy Island and Wildwood Crest Sunset Lake. Heights between NOAA high/low events are estimates.
+Currents adjust passage timing based on the changing position and time. New Jersey offshore legs have no modeled current correction. The inside tide page uses a cleaned 2022 recorded track and slow-section timing; cruise speed changes open stretches. Three adjustable bridge delays are assumptions, not opening schedules. Tide recommendations focus on six checkpoints: Main Marsh Thorofare, Ludlam Bay, Nummy Island, Wildwood Crest Sunset Lake, All Seasons Marina and the Atlantic City rail bridge. The last two use explicitly labeled nearby NOAA prediction proxies (8534975 and 8534638). Adjustable on-page low-water alerts default to 1.0 ft MLLW; they do not calculate clearance. Heights between NOAA high/low events are estimates.
 
 Draft and height inputs are stored in the browser for future clearance features. This is a planning estimate, not a verified navigable route or depth-clearance calculation.
 

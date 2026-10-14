@@ -19,3 +19,5 @@ header{position:relative;background:white;color:#143345;border-bottom:0;padding-
 .mapPick[aria-pressed="true"]{background:#087c72;color:white}.pickingEndpoint,.pickingEndpoint .leaflet-interactive{cursor:crosshair!important}.pickingEndpoint{outline:3px solid #087c72;outline-offset:-3px}
 
 .leaflet-waypoint-pane{pointer-events:none}.leaflet-waypoint-pane svg{pointer-events:none}.leaflet-waypoint-pane .leaflet-interactive{pointer-events:auto}
+
+.tideSource{display:block;font-size:11px;color:#526b7b;line-height:1.45;max-width:300px;margin-top:4px}.lowWaterNotice{margin:12px 0;padding:12px 14px;background:#e9f3f3;border-left:4px solid #087c72;font-size:14px;line-height:1.5}.lowWaterWarning{background:#fff0e5;border-color:#b13e27;color:#7d2d19}.lowWaterRow{background:#fff4ec}.waterFlag{font-size:12px;font-weight:700;color:#32616a}.waterFlagLow{color:#a23821}.lowWaterControls{border:1px solid #c4d7df;border-radius:7px;padding:12px}.lowWaterControls legend{font-weight:700;padding:0 5px}.lowWaterControls a{color:#087c72}.stationRowsLink:focus-visible{outline:3px solid #087c72;outline-offset:-3px}
