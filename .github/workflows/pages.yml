@@ -48,12 +48,21 @@ jobs:
       - name: Refresh saved weekly current and tide predictions
         if: steps.refresh.outputs.run == 'true'
         run: python scripts/refresh-weekly.py
+      - name: Populate new NJ checkpoint tide caches when needed
+        run: |
+          python - <<'PY'
+          import json,pathlib,subprocess
+          stations=json.loads(pathlib.Path('config/nj-tide-stations.json').read_text())
+          manifest=json.loads(pathlib.Path('dist/nj/tides/manifest.json').read_text())
+          if any(not (pathlib.Path('dist/nj/tides')/st['id']/(week+'.json')).exists() for st in stations for week in manifest['weeks']):
+              subprocess.run(['python','scripts/refresh-nj-tides.py'],check=True)
+          PY
       - name: Verify static site and cached predictions
         run: |
           python - <<'PY'
           import json,pathlib
           root=pathlib.Path('dist')
-          for name in ['index.html','currents.html','nj.html','app.js','nj-app.js']:
+          for name in ['index.html','currents.html','nj.html','app.js','nj-app.js','help.html','about.html','guide.css']:
               assert (root/name).is_file(),name
           assert (root/'CNAME').read_text().strip()=='tripplanner.bitterradish.com'
           for folder in ['predictions','nj/tides']:
@@ -66,6 +75,8 @@ jobs:
                       json.loads(path.read_text())
           print('Pages and complete prediction caches verified.')
           PY
+      - name: Check NJ priority tide calculations
+        run: node scripts/check-nj-checkpoints.cjs
       - name: Save imported source or refreshed NOAA cache
         run: |
           git config user.name 'github-actions[bot]'
