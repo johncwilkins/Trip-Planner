@@ -1,0 +1,93 @@
+name: Deploy Trip Planner
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6,7 * * 1'
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+concurrency:
+  group: trip-planner-pages
+  cancel-in-progress: false
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Expand initial source upload
+        run: |
+          if [ -f trip-planner-source.zip ]; then
+            python - <<'PY'
+          import pathlib,zipfile
+          root=pathlib.Path.cwd()
+          with zipfile.ZipFile('trip-planner-source.zip') as z:
+              for entry in z.infolist():
+                  target=(root/entry.filename).resolve()
+                  if not target.is_relative_to(root) or entry.filename.startswith(('.git/','.github/','.openai/')):
+                      raise ValueError('Unexpected path in source bundle')
+              z.extractall(root)
+          PY
+            git rm trip-planner-source.zip
+          fi
+      - name: Decide whether to refresh NOAA
+        id: refresh
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          python - <<'PY'
+          import datetime,os
+          from zoneinfo import ZoneInfo
+          local=datetime.datetime.now(ZoneInfo('America/New_York'))
+          refresh=os.environ['EVENT_NAME']=='workflow_dispatch' or (os.environ['EVENT_NAME']=='schedule' and local.hour==2)
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
+              f.write('run='+str(refresh).lower()+'\n')
+          PY
+      - name: Refresh saved weekly current and tide predictions
+        if: steps.refresh.outputs.run == 'true'
+        run: python scripts/refresh-weekly.py
+      - name: Verify static site and cached predictions
+        run: |
+          python - <<'PY'
+          import json,pathlib
+          root=pathlib.Path('dist')
+          for name in ['index.html','currents.html','nj.html','app.js','nj-app.js']:
+              assert (root/name).is_file(),name
+          assert (root/'CNAME').read_text().strip()=='tripplanner.bitterradish.com'
+          for folder in ['predictions','nj/tides']:
+              base=root/folder
+              manifest=json.loads((base/'manifest.json').read_text())
+              for st in manifest['stations']:
+                  for week in manifest['weeks']:
+                      path=base/st['id']/(week+'.json')
+                      assert path.is_file(),str(path)
+                      json.loads(path.read_text())
+          print('Pages and complete prediction caches verified.')
+          PY
+      - name: Save imported source or refreshed NOAA cache
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add README.md .gitignore dist config scripts
+          if ! git diff --cached --quiet; then
+            git commit -m 'Import planner source or refresh weekly NOAA cache'
+            git push
+          fi
+      - name: Upload Pages site
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+  deploy:
+    needs: prepare
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Deploy Pages site
+        id: deployment
+        uses: actions/deploy-pages@v4
