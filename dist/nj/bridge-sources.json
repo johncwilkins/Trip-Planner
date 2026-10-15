@@ -1,0 +1,31 @@
+{
+  "reviewedDate": "2026-10-15",
+  "geometrySource": "https://gis.charttools.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer",
+  "clearanceSource": "https://nauticalcharts.noaa.gov/publications/coast-pilot/files/cp3/CPB3_C05_WEB.pdf#page=3",
+  "excluded": [
+    {
+      "name": "Crooked Horn Thorofare railroad bridge, ICW mile 86.6",
+      "reason": "Coast Pilot reports bridge removed; not counted as an operating obstruction."
+    },
+    {
+      "name": "Dorset Avenue Bridge",
+      "reason": "Recorded passage follows West Canal and does not cross this bridge."
+    },
+    {
+      "name": "Cape May Canal Route 109, railroad and Route 162 bridges",
+      "reason": "Outside this recorded Canyon Club to Dillon\u2019s Creek track."
+    },
+    {
+      "name": "Route 37 / Toms River bridges",
+      "reason": "North of the selected route to Dillon\u2019s Creek."
+    }
+  ],
+  "count": 15,
+  "movableCount": 7,
+  "notes": [
+    "Route 72 parallel spans grouped as one crossing.",
+    "Closed/fixed clearances are feet above MHW, not MLLW.",
+    "Tide adjustment uses published MHW-MLLW and predictions from the same named proxy station; no claim of a bridge-local gauge.",
+    "Temporary clearance changes, closed-bridge positions, opening schedules and live notices are not automatically monitored."
+  ]
+}

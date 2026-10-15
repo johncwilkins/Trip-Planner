@@ -26,10 +26,14 @@ The first workflow run expands the uploaded source bundle into ordinary versione
 
 ## Calculations
 
-Currents adjust passage timing based on the changing position and time. New Jersey offshore legs have no modeled current correction. The inside tide page uses a cleaned 2022 recorded track and slow-section timing; cruise speed changes open stretches. Three adjustable bridge delays are assumptions, not opening schedules. Tide recommendations focus on six checkpoints: Main Marsh Thorofare, Ludlam Bay, Nummy Island, Wildwood Crest Sunset Lake, All Seasons Marina and the Atlantic City rail bridge. The last two use explicitly labeled nearby NOAA prediction proxies (8534975 and 8534638). Adjustable on-page low-water alerts default to 1.0 ft MLLW; they do not calculate clearance. Heights between NOAA high/low events are estimates.
+Currents adjust passage timing based on the changing position and time. New Jersey offshore legs have no modeled current correction. The inside tide page uses a cleaned 2022 recorded track and slow-section timing; cruise speed changes open stretches. Movable bridge delays are assumptions, not opening schedules. Tide recommendations focus on six checkpoints: Main Marsh Thorofare, Ludlam Bay, Nummy Island, Wildwood Crest Sunset Lake, All Seasons Marina and the Atlantic City rail bridge. The last two use explicitly labeled nearby NOAA prediction proxies (8534975 and 8534638). Adjustable on-page low-water alerts default to 1.0 ft MLLW; they do not calculate clearance. Heights between NOAA high/low events are estimates.
 
-Draft and height inputs are stored in the browser for future clearance features. This is a planning estimate, not a verified navigable route or depth-clearance calculation.
+Draft is saved for future depth checks; height and margin now control estimated bridge checks and waits. This is a planning estimate, not a verified navigable route or depth-clearance calculation.
 
 ## Third-party assets
 
 Leaflet 1.9.4 and Leaflet Rotate 0.2.8 are vendored. The Leaflet Rotate GPL-3.0 license and unminified source are included in `dist`. NOAA shoreline and prediction data provide the chart previews and planning foundation. The BitterRadish artwork is reused from the owner’s portfolio.
+
+## Height-aware bridge checks (NJ tide page)
+
+The NJ track has 15 reviewed bridge crossings (the two Route 72 spans are grouped), seven movable. `dist/nj/bridges.json` retains chart geometry locations, published MHW clearances, same-station MHW−MLLW datum differences, tide sources and provenance. Entered air height plus an adjustable 2-ft default margin determines conditional movable-bridge waits; fixed-bridge conflicts exclude departure candidates. Blank height conservatively applies all movable waits and makes no clearance decision. These are nearby-station estimates, not verified clearance or opening schedules. `dist/nj/bridge-sources.json` explains exclusions and the review date.

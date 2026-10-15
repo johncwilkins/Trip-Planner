@@ -416,5 +416,21 @@
     "distance": 88.73517201959342,
     "routeLat": 39.945562,
     "routeLon": -74.138159
+  },
+  {
+    "id": "8534720",
+    "name": "Atlantic City \u00b7 ocean tide source",
+    "lat": 39.356666564941406,
+    "lon": -74.41805267333984,
+    "sub": false,
+    "bridgeSourceOnly": true
+  },
+  {
+    "id": "8536110",
+    "name": "Cape May \u00b7 bridge tide source",
+    "lat": 38.96799850463867,
+    "lon": -74.95999908447266,
+    "sub": false,
+    "bridgeSourceOnly": true
   }
 ]
