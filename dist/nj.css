@@ -26,3 +26,5 @@ header{position:relative;background:white;color:#143345;border-bottom:0;padding-
 
 /* Keep comparison under the map independently of the inspection panel. */
 .passageColumn{min-width:0;display:flex;flex-direction:column;gap:12px;align-self:start}.passageColumn .comparison{margin:0}.passageColumn #chart{height:120px}.passageColumn .comparison .sectionTitle{flex-wrap:wrap;gap:4px;padding-bottom:5px}.passageColumn .comparison h2{font-size:16px}.passageColumn .comparison .sectionTitle span{font-size:12px}.passageColumn .comparison>p{font-size:12px;line-height:1.4}.workspace{align-items:start}.slowLegendLine{display:inline-block;width:26px;height:0;border-top:4px dashed #c23538;flex:none}
+
+.slowLegendLine{height:10px;border-top:3px dashed #c23538;border-bottom:3px dashed #c23538;background:#078675}
