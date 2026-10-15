@@ -8,10 +8,6 @@
       "reason": "Coast Pilot reports bridge removed; not counted as an operating obstruction."
     },
     {
-      "name": "Dorset Avenue Bridge",
-      "reason": "Recorded passage follows West Canal and does not cross this bridge."
-    },
-    {
       "name": "Cape May Canal Route 109, railroad and Route 162 bridges",
       "reason": "Outside this recorded Canyon Club to Dillon\u2019s Creek track."
     },
@@ -20,12 +16,14 @@
       "reason": "North of the selected route to Dillon\u2019s Creek."
     }
   ],
-  "count": 15,
-  "movableCount": 7,
+  "count": 16,
+  "movableCount": 8,
   "notes": [
     "Route 72 parallel spans grouped as one crossing.",
     "Closed/fixed clearances are feet above MHW, not MLLW.",
     "Tide adjustment uses published MHW-MLLW and predictions from the same named proxy station; no claim of a bridge-local gauge.",
-    "Temporary clearance changes, closed-bridge positions, opening schedules and live notices are not automatically monitored."
+    "Temporary clearance changes, closed-bridge positions, opening schedules and live notices are not automatically monitored.",
+    "Crossing confirmed by track owner. Sparse recorded track is about 0.08 nm from the charted span; timing uses its nearest passage position.",
+    "Optional Albany\u2013Dorset coordination assumes a single wait for both indicated openings, per owner experience; it does not calculate or guarantee scheduled openings."
   ]
 }

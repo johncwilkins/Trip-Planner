@@ -33,6 +33,7 @@ function passage(route,profile,start,finish,departure,bridgeDelays={},clearanceO
  const sa=secondsAt(route,profile,start.distance),sb=secondsAt(route,profile,finish.distance),reverse=finish.distance<start.distance,totalDistance=Math.abs(finish.distance-start.distance),sign=reverse?-1:1,progress=s=>(s-start.distance)*sign;
  let bridgeDelayMinutes=0;
  const bridges=(route.bridges||[]).filter(b=>progress(b.distance)>1e-7&&progress(b.distance)<totalDistance-1e-7).map(b=>({...b,progress:progress(b.distance)})).sort((a,b)=>a.progress-b.progress);
+ let firstPairOpening=null;
  for(const b of bridges){
   const assumedDelayMinutes=bridgeDelays[b.key]??b.defaultDelayMinutes??15;
   if(!Number.isFinite(assumedDelayMinutes)||assumedDelayMinutes<0||assumedDelayMinutes>30)throw Error('Bridge delays must be between 0 and 30 minutes.');
@@ -41,6 +42,10 @@ function passage(route,profile,start,finish,departure,bridgeDelays={},clearanceO
   const movable=b.movable!==false;
   b.assumedDelayMinutes=movable?assumedDelayMinutes:0;
   b.delayMinutes=movable&&b.status!=='closed-pass'?assumedDelayMinutes:0;
+  if(clearanceOptions.coordinateAlbanyDorset&&['albany','dorset'].includes(b.key)&&b.status==='open'){
+   if(firstPairOpening){b.coordinatedWith=firstPairOpening.name;b.pairTransitMinutes=Math.abs(secondsAt(route,profile,b.distance)-secondsAt(route,profile,firstPairOpening.distance))/60;b.delayMinutes=0;}
+   else firstPairOpening=b;
+  }
   bridgeDelayMinutes+=b.delayMinutes;b.clear=b.arrival+b.delayMinutes*60000;
  }
  const eta=s=>departure+Math.abs(secondsAt(route,profile,s)-sa)*1000+bridges.filter(b=>b.progress<progress(s)-1e-7).reduce((sum,b)=>sum+b.delayMinutes*60000,0);

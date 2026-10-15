@@ -57,9 +57,22 @@ for(const reverse of [false,true]){
  const a=route.endpoints[reverse?route.endpoints.length-1:0],b=route.endpoints[reverse?0:route.endpoints.length-1];
  for(let t=start-10*3600000;t<=start+10*3600000;t+=600000){
   const q=N.passage(route,profile,a,b,t,{}, {boatHeightFt:15,marginFt:2,waterLevel:(id,time)=>N.tide(data[id],time).height});
-  assert.equal(q.bridges.length,15);assert.equal(q.uncheckedBridges.length,0);assert.equal(q.blockedBridges.length,0);
+  assert.equal(q.bridges.length,16);assert.equal(q.uncheckedBridges.length,0);assert.equal(q.blockedBridges.length,0);
   for(const bridge of q.bridges){assert.equal(q.eta(bridge.distance),bridge.arrival);if(!bridge.movable||bridge.status==='closed-pass')assert.equal(bridge.delayMinutes,0);}
  }
  const tooTall=N.passage(route,profile,a,b,start,{}, {boatHeightFt:80,marginFt:2,waterLevel:(id,time)=>N.tide(data[id],time).height});assert.ok(tooTall.blockedBridges.length>0);
 }
 console.log('Datum conversion, boundary, missing-data, sequential opening decisions, fixed obstructions and 242 real height-aware departure scenarios passed.');
+
+// A coordinated pair applies only one wait in either travel direction, never hides an unknown clearance.
+const pairRoute={...mock,bridges:mock.bridges.map((b,i)=>({...b,key:i?'dorset':'albany',name:i?'Dorset':'Albany',closedClearanceFt:5}))};
+for(const reverse of [false,true]){
+ const a={distance:reverse?2:0},b={distance:reverse?0:2},opts={boatHeightFt:10,marginFt:2,waterLevel:()=>0,coordinateAlbanyDorset:true};
+ const linked=N.passage(pairRoute,N.profile(mock,26),a,b,0,{},opts),separate=N.passage(pairRoute,N.profile(mock,26),a,b,0,{}, {...opts,coordinateAlbanyDorset:false});
+ assert.equal(linked.bridgeDelayMinutes,15);assert.equal(separate.bridgeDelayMinutes,30);
+ assert.equal(linked.bridges[0].delayMinutes,15);assert.equal(linked.bridges[1].delayMinutes,0);assert.equal(linked.bridges[1].coordinatedWith,linked.bridges[0].name);
+ const blank=N.passage(pairRoute,N.profile(mock,26),a,b,0,{}, {...opts,boatHeightFt:null});assert.equal(blank.bridgeDelayMinutes,30);
+ const onePassRoute={...pairRoute,bridges:pairRoute.bridges.map((b,i)=>i?{...b,closedClearanceFt:20}:b)};
+ const one=N.passage(onePassRoute,N.profile(mock,26),a,b,0,{},opts);assert.equal(one.bridgeDelayMinutes,15);assert.equal(one.bridges.filter(b=>b.coordinatedWith).length,0);
+}
+console.log('Albany/Dorset shared wait verified in both directions, including blank height and one closed pass.');
