@@ -1,18 +1,19 @@
 [
   {
     "id": "all-seasons",
-    "name": "All Seasons Marina \u00b7 Ocean City",
-    "lat": 39.25361111111111,
-    "lon": -74.62777777777777,
+    "name": "Ocean City, Beesleys Point",
+    "lat": 39.25892972222222,
+    "lon": -74.6245725,
     "sourceStationId": "8534975",
     "sourceStationName": "Beesleys Point \u00b7 Great Egg Harbor Bay",
     "sourceLat": 39.2883,
     "sourceLon": -74.6283,
-    "locationSource": "https://pubs.usgs.gov/wdr/2005/wdr-nj-05-1/pdf/01411318.2005.sw.pdf"
+    "locationSource": "https://www.navcen.uscg.gov/sites/default/files/pdf/lightLists/LightList_V2_2024.pdf",
+    "locationNote": "Near NJICW red Light 280 (LLNR 36065), north of All Seasons Marina."
   },
   {
     "id": "ac-railroad",
-    "name": "Atlantic City",
+    "name": "Great Thoroughfare, Atlantic City",
     "lat": 39.35971111111111,
     "lon": -74.44973277777777,
     "sourceStationId": "8534638",

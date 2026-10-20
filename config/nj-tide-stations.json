@@ -145,14 +145,15 @@
   },
   {
     "id": "all-seasons",
-    "name": "All Seasons Marina \u00b7 Ocean City",
-    "lat": 39.25361111111111,
-    "lon": -74.62777777777777,
+    "name": "Ocean City, Beesleys Point",
+    "lat": 39.25892972222222,
+    "lon": -74.6245725,
     "sourceStationId": "8534975",
-    "sourceStationName": "Beesleys Point \u00b7 Great Egg Harbor Bay",
+    "sourceStationName": "Beesleys Point · Great Egg Harbor Bay",
     "sourceLat": 39.2883,
     "sourceLon": -74.6283,
-    "locationSource": "https://pubs.usgs.gov/wdr/2005/wdr-nj-05-1/pdf/01411318.2005.sw.pdf"
+    "locationSource": "https://www.navcen.uscg.gov/sites/default/files/pdf/lightLists/LightList_V2_2024.pdf",
+    "locationNote": "Near NJICW red Light 280 (LLNR 36065), north of All Seasons Marina."
   },
   {
     "id": "8534836",
@@ -168,14 +169,15 @@
   },
   {
     "id": "ac-railroad",
-    "name": "Atlantic City rail bridge",
-    "lat": 39.36434893174073,
-    "lon": -74.44548354062141,
+    "name": "Great Thoroughfare, Atlantic City",
+    "lat": 39.35971111111111,
+    "lon": -74.44973277777777,
     "sourceStationId": "8534638",
     "sourceStationName": "Absecon Channel, State Route 87 bridge",
     "sourceLat": 39.385,
     "sourceLon": -74.425,
-    "locationSource": "https://www.waterwayguide.com/bridge/3-859/amtrak-njtro-bridge"
+    "locationSource": "https://www.weather.gov/media/phi/BouyData.pdf",
+    "locationNote": "Near NJICW green daybeacon 207 (LLNR 35830), the small island and Bader Field runway end; separate from the rail bridge crossing."
   },
   {
     "id": "8534638",
@@ -419,7 +421,7 @@
   },
   {
     "id": "8534720",
-    "name": "Atlantic City \u00b7 ocean tide source",
+    "name": "Atlantic City · ocean tide source",
     "lat": 39.356666564941406,
     "lon": -74.41805267333984,
     "sub": false,
@@ -427,7 +429,7 @@
   },
   {
     "id": "8536110",
-    "name": "Cape May \u00b7 bridge tide source",
+    "name": "Cape May · bridge tide source",
     "lat": 38.96799850463867,
     "lon": -74.95999908447266,
     "sub": false,

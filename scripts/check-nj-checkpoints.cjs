@@ -6,7 +6,7 @@ const manifest=read('dist/nj/tides/manifest.json');
 const data=Object.fromEntries(manifest.stations.map(st=>[st.id,[...new Map(manifest.weeks.flatMap(w=>read(`dist/nj/tides/${st.id}/${w}.json`).events).map(e=>[e[0],e])).values()].sort((a,b)=>a[0]-b[0])]));
 assert.equal(N.priorityStations(route.stations).length,6);
 const atlanticCity=route.stations.find(st=>st.id==='ac-railroad'),railBridge=route.bridges.find(b=>b.key==='railroad');
-assert.equal(atlanticCity.name,'Atlantic City');
+assert.equal(atlanticCity.name,'Great Thoroughfare, Atlantic City');
 assert.ok(atlanticCity.distance<railBridge.distance-0.2,'Atlantic City checkpoint must be south of and separate from the rail bridge.');
 assert.ok(atlanticCity.offsetNm<0.1,'G207 checkpoint should be close to the recorded passage.');
 const start=N.eastern('2026-10-14','13:00'),profile=N.profile(route,26);
