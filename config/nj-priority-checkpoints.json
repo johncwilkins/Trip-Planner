@@ -12,13 +12,14 @@
   },
   {
     "id": "ac-railroad",
-    "name": "Atlantic City rail bridge",
-    "lat": 39.36434893174073,
-    "lon": -74.44548354062141,
+    "name": "Atlantic City",
+    "lat": 39.35971111111111,
+    "lon": -74.44973277777777,
     "sourceStationId": "8534638",
     "sourceStationName": "Absecon Channel, State Route 87 bridge",
     "sourceLat": 39.385,
     "sourceLon": -74.425,
-    "locationSource": "https://www.waterwayguide.com/bridge/3-859/amtrak-njtro-bridge"
+    "locationSource": "https://www.weather.gov/media/phi/BouyData.pdf",
+    "locationNote": "Near NJICW green daybeacon 207 (LLNR 35830), the small island and Bader Field runway end; separate from the rail bridge crossing."
   }
 ]

@@ -10,7 +10,6 @@ function addCheckpoints(route,definitions){
   }
   const c=Math.cos(definition.lat*Math.PI/180),sourceOffsetNm=Math.hypot((definition.sourceLon-definition.lon)*c,definition.sourceLat-definition.lat)*60;
   const checkpoint={...definition,...best,sourceOffsetNm,checkpoint:true,sub:true};delete checkpoint.error;
-  if(definition.id==='ac-railroad'){const bridge=(route.bridges||[]).find(b=>b.key==='railroad');if(bridge)Object.assign(checkpoint,{distance:bridge.distance,routeLat:bridge.routeLat,routeLon:bridge.routeLon});}
   route.stations=route.stations.filter(st=>st.id!==definition.id);route.stations.push(checkpoint);
  }
  route.stations.sort((a,b)=>a.distance-b.distance);return route;
