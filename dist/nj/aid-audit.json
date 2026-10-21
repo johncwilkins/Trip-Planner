@@ -1,0 +1,2518 @@
+{
+  "auditedAt": "2026-10-21T17:46:20.991Z",
+  "corridorNm": 0.5,
+  "route": "Full Cape May–Manasquan inside route",
+  "method": "Counts by highest-priority reported problem per aid; all ages retained. Source record creation is not interpreted as occurrence/report date. Reports for one aid remain available separately. Status is not inferred from Approved or from presence in the active source file.",
+  "before": {
+    "snapshotRetrievedAt": "2026-10-21T15:13:48.906398+00:00",
+    "regionalRecords": 48,
+    "outsideHalfNm": 14,
+    "allRouteAids": {
+      "sourceRecords": 34,
+      "uniqueAids": 33,
+      "categories": {
+        "physical": 24,
+        "visibility": 9,
+        "other": 0,
+        "total": 33,
+        "unspecified": 0,
+        "uncertain": 33,
+        "outstanding": 0,
+        "restored": 0
+      }
+    },
+    "federalRouteAids": {
+      "sourceRecords": 31,
+      "uniqueAids": 31,
+      "categories": {
+        "physical": 22,
+        "visibility": 9,
+        "other": 0,
+        "total": 31,
+        "unspecified": 0,
+        "uncertain": 31,
+        "outstanding": 0,
+        "restored": 0
+      }
+    },
+    "recentFederalView": {
+      "sourceRecords": 14,
+      "uniqueAids": 14,
+      "categories": {
+        "physical": 8,
+        "visibility": 6,
+        "other": 0,
+        "total": 14,
+        "unspecified": 0,
+        "uncertain": 14,
+        "outstanding": 0,
+        "restored": 0
+      }
+    },
+    "duplicateAidGroups": [
+      {
+        "name": "Ship Channel Buoy 3",
+        "lightList": "1335",
+        "records": [
+          {
+            "id": "lnm-100119549355",
+            "created": "2026-03-24",
+            "correction": "Correction Status Unreported",
+            "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discPriAid_2.geojson"
+          },
+          {
+            "id": "lnm-100119438990",
+            "created": "2024-09-24",
+            "correction": "Correction Status Unreported",
+            "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discPriAid_2.geojson"
+          }
+        ]
+      }
+    ],
+    "records": [
+      {
+        "id": "lnm-100119446986",
+        "name": "New Jersey Intracoastal Waterway Light 260",
+        "raw": "STRUCT DEST/HAZ NAV/TRLB",
+        "discrepancy": "STRUCTURE DESTROYED / NAVIGATION HAZARD / TEMPORARY LIGHTED BUOY",
+        "groups": [
+          "physical",
+          "other"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "36000",
+        "aidNumber": "",
+        "recordId": "lnm-100119446986",
+        "officialStatus": "",
+        "created": "2024-10-31",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": true,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_1.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.59140999999994,
+            39.278350000000046
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119486098",
+        "name": "New Jersey Intracoastal Waterway Light 310",
+        "raw": "STRUCT DMGD",
+        "discrepancy": "STRUCTURE DAMAGED",
+        "groups": [
+          "physical"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "36165",
+        "aidNumber": "",
+        "recordId": "lnm-100119486098",
+        "officialStatus": "",
+        "created": "2025-03-24",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_1.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.65543999999994,
+            39.21741000000003
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119486903",
+        "name": "New Jersey Intracoastal Waterway Daybeacon 245",
+        "raw": "STRUCT DEST/TRLB/HAZ NAV",
+        "discrepancy": "STRUCTURE DESTROYED / TEMPORARY LIGHTED BUOY / NAVIGATION HAZARD",
+        "groups": [
+          "physical",
+          "other"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35950",
+        "aidNumber": "",
+        "recordId": "lnm-100119486903",
+        "officialStatus": "",
+        "created": "2025-03-30",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": true,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_1.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.56013999999993,
+            39.30854000000005
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119511077",
+        "name": "New Jersey Intracoastal Waterway Daybeacon 348",
+        "raw": "STRUCT DMGD",
+        "discrepancy": "STRUCTURE DAMAGED",
+        "groups": [
+          "physical"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "36300",
+        "aidNumber": "",
+        "recordId": "lnm-100119511077",
+        "officialStatus": "",
+        "created": "2025-08-04",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_1.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.69984999999997,
+            39.17133000000007
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119535553",
+        "name": "New Jersey Intracoastal Waterway Daybeacon 152",
+        "raw": "STRUCT DEST/HAZ NAV/TRLB",
+        "discrepancy": "STRUCTURE DESTROYED / NAVIGATION HAZARD / TEMPORARY LIGHTED BUOY",
+        "groups": [
+          "physical",
+          "other"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35615",
+        "aidNumber": "",
+        "recordId": "lnm-100119535553",
+        "officialStatus": "",
+        "created": "2025-11-17",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": true,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.39254999999997,
+            39.468210000000056
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119545102",
+        "name": "New Jersey Intracoastal Waterway Light 40",
+        "raw": "STRUCT DEST/HAZ NAV/TRLB",
+        "discrepancy": "STRUCTURE DESTROYED / NAVIGATION HAZARD / TEMPORARY LIGHTED BUOY",
+        "groups": [
+          "physical",
+          "other"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35125",
+        "aidNumber": "",
+        "recordId": "lnm-100119545102",
+        "officialStatus": "",
+        "created": "2026-02-03",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": true,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.12251999999995,
+            39.86179000000004
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119548230",
+        "name": "New Jersey Intracoastal Waterway Light 62",
+        "raw": "DBD DEST/LT IMCH",
+        "discrepancy": "DAYBOARD DESTROYED / INCORRECT LIGHT CHARACTERISTIC",
+        "groups": [
+          "visibility"
+        ],
+        "group": "visibility",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35225",
+        "aidNumber": "",
+        "recordId": "lnm-100119548230",
+        "officialStatus": "",
+        "created": "2026-03-02",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.17535999999996,
+            39.67352000000005
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119548803",
+        "name": "New Jersey Intracoastal Waterway Light 167",
+        "raw": "STRUCT DEST/HAZ NAV/TRLB/OFF STATION",
+        "discrepancy": "STRUCTURE DESTROYED / NAVIGATION HAZARD / TEMPORARY LIGHTED BUOY / OFF STATION",
+        "groups": [
+          "physical",
+          "other"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35675",
+        "aidNumber": "",
+        "recordId": "lnm-100119548803",
+        "officialStatus": "",
+        "created": "2026-03-12",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": true,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.40332999999998,
+            39.43459000000007
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119548804",
+        "name": "New Jersey Intracoastal Waterway Daybeacon 171",
+        "raw": "STRUCT DEST/HAZ NAV",
+        "discrepancy": "STRUCTURE DESTROYED / NAVIGATION HAZARD",
+        "groups": [
+          "physical",
+          "other"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35690",
+        "aidNumber": "",
+        "recordId": "lnm-100119548804",
+        "officialStatus": "",
+        "created": "2026-03-12",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.41506999999996,
+            39.43321000000003
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119548805",
+        "name": "New Jersey Intracoastal Waterway Daybeacon 170A",
+        "raw": "STRUCT DEST/HAZ NAV/TRLB",
+        "discrepancy": "STRUCTURE DESTROYED / NAVIGATION HAZARD / TEMPORARY LIGHTED BUOY",
+        "groups": [
+          "physical",
+          "other"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35687",
+        "aidNumber": "",
+        "recordId": "lnm-100119548805",
+        "officialStatus": "",
+        "created": "2026-03-12",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": true,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.41709999999995,
+            39.43080000000003
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119595727",
+        "name": "New Jersey Intracoastal Waterway Daybeacon 313",
+        "raw": "STRUCT DEST/HAZ NAV/TRLB",
+        "discrepancy": "STRUCTURE DESTROYED / NAVIGATION HAZARD / TEMPORARY LIGHTED BUOY",
+        "groups": [
+          "physical",
+          "other"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "36175",
+        "aidNumber": "",
+        "recordId": "lnm-100119595727",
+        "officialStatus": "",
+        "created": "2026-04-10",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": true,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.66090999999994,
+            39.21416000000005
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119597683",
+        "name": "New Jersey Intracoastal Waterway Daybeacon 44",
+        "raw": "STRUCT DEST/HAZ NAV/TRLB",
+        "discrepancy": "STRUCTURE DESTROYED / NAVIGATION HAZARD / TEMPORARY LIGHTED BUOY",
+        "groups": [
+          "physical",
+          "other"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35160",
+        "aidNumber": "",
+        "recordId": "lnm-100119597683",
+        "officialStatus": "",
+        "created": "2026-04-29",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": true,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.15900999999997,
+            39.75660000000005
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119600176",
+        "name": "New Jersey Intracoastal Waterway Light 52",
+        "raw": "LT EXT",
+        "discrepancy": "LIGHT EXTINGUISHED",
+        "groups": [
+          "visibility"
+        ],
+        "group": "visibility",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35195",
+        "aidNumber": "",
+        "recordId": "lnm-100119600176",
+        "officialStatus": "",
+        "created": "2026-05-20",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.14551999999998,
+            39.70611000000008
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119600211",
+        "name": "New Jersey Intracoastal Waterway Buoy 342",
+        "raw": "OFF STATION",
+        "discrepancy": "OFF STATION",
+        "groups": [
+          "physical"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "36280",
+        "aidNumber": "",
+        "recordId": "lnm-100119600211",
+        "officialStatus": "",
+        "created": "2026-05-20",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.69969999999995,
+            39.18231000000003
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119600269",
+        "name": "New Jersey Intracoastal Waterway Daybeacon 178",
+        "raw": "STRUCT DEST/TRUB",
+        "discrepancy": "STRUCTURE DESTROYED / TEMPORARY UNLIGHTED BUOY",
+        "groups": [
+          "physical",
+          "other"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35725",
+        "aidNumber": "",
+        "recordId": "lnm-100119600269",
+        "officialStatus": "",
+        "created": "2026-05-21",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": true,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.43530999999996,
+            39.40462000000008
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119600613",
+        "name": "New Jersey Intracoastal Waterway Daybeacon 147",
+        "raw": "STRUCT DEST/HAZ NAV/TRLB",
+        "discrepancy": "STRUCTURE DESTROYED / NAVIGATION HAZARD / TEMPORARY LIGHTED BUOY",
+        "groups": [
+          "physical",
+          "other"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35595",
+        "aidNumber": "",
+        "recordId": "lnm-100119600613",
+        "officialStatus": "",
+        "created": "2026-05-28",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": true,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.37933999999996,
+            39.47930000000008
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119603270",
+        "name": "New Jersey Intracoastal Waterway Light 24",
+        "raw": "DBD DEST",
+        "discrepancy": "DAYBOARD DESTROYED",
+        "groups": [
+          "visibility"
+        ],
+        "group": "visibility",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35060",
+        "aidNumber": "",
+        "recordId": "lnm-100119603270",
+        "officialStatus": "",
+        "created": "2026-06-22",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.11151999999998,
+            39.98321000000004
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119608018",
+        "name": "New Jersey Intracoastal Waterway Light 34",
+        "raw": "LT EXT",
+        "discrepancy": "LIGHT EXTINGUISHED",
+        "groups": [
+          "visibility"
+        ],
+        "group": "visibility",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35095",
+        "aidNumber": "",
+        "recordId": "lnm-100119608018",
+        "officialStatus": "",
+        "created": "2026-08-05",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.10548999999997,
+            39.938630000000046
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119612154",
+        "name": "New Jersey Intracoastal Waterway Light 83",
+        "raw": "STRUCT DEST/HAZ NAV/TRLB",
+        "discrepancy": "STRUCTURE DESTROYED / NAVIGATION HAZARD / TEMPORARY LIGHTED BUOY",
+        "groups": [
+          "physical",
+          "other"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35325",
+        "aidNumber": "",
+        "recordId": "lnm-100119612154",
+        "officialStatus": "",
+        "created": "2026-09-08",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": true,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.20980999999995,
+            39.608610000000056
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119612642",
+        "name": "New Jersey Intracoastal Waterway Daybeacon 60",
+        "raw": "STRUCT DEST/TRLB",
+        "discrepancy": "STRUCTURE DESTROYED / TEMPORARY LIGHTED BUOY",
+        "groups": [
+          "physical",
+          "other"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35220",
+        "aidNumber": "",
+        "recordId": "lnm-100119612642",
+        "officialStatus": "",
+        "created": "2026-09-11",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": true,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.16866999999996,
+            39.68013000000008
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119612904",
+        "name": "Cape May Harbor Range Front Light 4",
+        "raw": "LT EXT",
+        "discrepancy": "LIGHT EXTINGUISHED",
+        "groups": [
+          "visibility"
+        ],
+        "group": "visibility",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "1455",
+        "aidNumber": "",
+        "recordId": "lnm-100119612904",
+        "officialStatus": "",
+        "created": "2026-09-16",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.87643999999995,
+            38.95216000000005
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119613095",
+        "name": "Manasquan River Daybeacon 11",
+        "raw": "STRUCT DEST/HAZ NAV",
+        "discrepancy": "STRUCTURE DESTROYED / NAVIGATION HAZARD",
+        "groups": [
+          "physical",
+          "other"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "34975",
+        "aidNumber": "",
+        "recordId": "lnm-100119613095",
+        "officialStatus": "",
+        "created": "2026-09-21",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.06655999999998,
+            40.090280000000064
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119614001",
+        "name": "New Jersey Intracoastal Lighted Buoy 55",
+        "raw": "OFF STATION",
+        "discrepancy": "OFF STATION",
+        "groups": [
+          "physical"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35200",
+        "aidNumber": "",
+        "recordId": "lnm-100119614001",
+        "officialStatus": "",
+        "created": "2026-10-01",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_3.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.15296999999998,
+            39.69269000000003
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119614091",
+        "name": "New Jersey Intracoastal Waterway Daybeacon 49",
+        "raw": "DBD DEST",
+        "discrepancy": "DAYBOARD DESTROYED",
+        "groups": [
+          "visibility"
+        ],
+        "group": "visibility",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35180",
+        "aidNumber": "",
+        "recordId": "lnm-100119614091",
+        "officialStatus": "",
+        "created": "2026-10-05",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_3.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.14638999999994,
+            39.72638000000006
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119614319",
+        "name": "New Jersey Intracoastal Waterway Light 145",
+        "raw": "LT EXT",
+        "discrepancy": "LIGHT EXTINGUISHED",
+        "groups": [
+          "visibility"
+        ],
+        "group": "visibility",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35590",
+        "aidNumber": "",
+        "recordId": "lnm-100119614319",
+        "officialStatus": "",
+        "created": "2026-10-06",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_3.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.37436999999994,
+            39.48390000000006
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119614321",
+        "name": "New Jersey Intracoastal Waterway Buoy 131A",
+        "raw": "OFF STATION",
+        "discrepancy": "OFF STATION",
+        "groups": [
+          "physical"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35540.1",
+        "aidNumber": "",
+        "recordId": "lnm-100119614321",
+        "officialStatus": "",
+        "created": "2026-10-06",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_3.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.36247999999995,
+            39.49890000000005
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119614322",
+        "name": "New Jersey Intracoastal Waterway Lighted Buoy 130",
+        "raw": "MISSING",
+        "discrepancy": "MISSING",
+        "groups": [
+          "physical"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35536",
+        "aidNumber": "",
+        "recordId": "lnm-100119614322",
+        "officialStatus": "",
+        "created": "2026-10-06",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_3.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.34531999999996,
+            39.50000000000006
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119614323",
+        "name": "New Jersey Intracoastal Waterway Light 172",
+        "raw": "STRUCT DMGD",
+        "discrepancy": "STRUCTURE DAMAGED",
+        "groups": [
+          "physical"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35695",
+        "aidNumber": "",
+        "recordId": "lnm-100119614323",
+        "officialStatus": "",
+        "created": "2026-10-06",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_3.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.41773999999998,
+            39.42978000000005
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119614324",
+        "name": "New Jersey Intracoastal Waterway Daybeacon 207",
+        "raw": "DBD DMGD",
+        "discrepancy": "DAYBOARD DAMAGED",
+        "groups": [
+          "visibility"
+        ],
+        "group": "visibility",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35830",
+        "aidNumber": "",
+        "recordId": "lnm-100119614324",
+        "officialStatus": "",
+        "created": "2026-10-06",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_3.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.44973999999996,
+            39.35972000000004
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119614905",
+        "name": "New Jersey Intracoastal Waterway Daybeacon 58",
+        "raw": "DBD DEST",
+        "discrepancy": "DAYBOARD DESTROYED",
+        "groups": [
+          "visibility"
+        ],
+        "group": "visibility",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35215",
+        "aidNumber": "",
+        "recordId": "lnm-100119614905",
+        "officialStatus": "",
+        "created": "2026-10-13",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_3.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.16404999999997,
+            39.685380000000066
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119615810",
+        "name": "New Jersey Intracoastal Waterway Buoy 384",
+        "raw": "MISSING",
+        "discrepancy": "MISSING",
+        "groups": [
+          "physical"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "36425",
+        "aidNumber": "",
+        "recordId": "lnm-100119615810",
+        "officialStatus": "",
+        "created": "2026-10-19",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_3.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.76458999999994,
+            39.098040000000026
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119438990",
+        "name": "Ship Channel Buoy 3",
+        "raw": "SINKING",
+        "discrepancy": "SINKING",
+        "groups": [
+          "physical"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "1335",
+        "aidNumber": "",
+        "recordId": "lnm-100119438990",
+        "officialStatus": "",
+        "created": "2024-09-24",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discPriAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.57911999999999,
+            39.30483000000004
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119511721",
+        "name": "West Point Island Buoy 1",
+        "raw": "ADRIFT",
+        "discrepancy": "ADRIFT",
+        "groups": [
+          "physical"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35078",
+        "aidNumber": "",
+        "recordId": "lnm-100119511721",
+        "officialStatus": "",
+        "created": "2025-08-11",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discPriAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.09967999999998,
+            39.95407000000006
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119549355",
+        "name": "Ship Channel Buoy 3",
+        "raw": "SINKING",
+        "discrepancy": "SINKING",
+        "groups": [
+          "physical"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "1335",
+        "aidNumber": "",
+        "recordId": "lnm-100119549355",
+        "officialStatus": "",
+        "created": "2026-03-24",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": null,
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discPriAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.57911999999999,
+            39.30483000000004
+          ]
+        }
+      }
+    ]
+  },
+  "after": {
+    "snapshotRetrievedAt": "2026-10-21T17:43:39.366958+00:00",
+    "regionalRecords": 49,
+    "outsideHalfNm": 15,
+    "allRouteAids": {
+      "sourceRecords": 34,
+      "uniqueAids": 33,
+      "categories": {
+        "physical": 24,
+        "visibility": 9,
+        "other": 0,
+        "total": 33,
+        "unspecified": 0,
+        "uncertain": 33,
+        "outstanding": 0,
+        "restored": 0
+      }
+    },
+    "federalRouteAids": {
+      "sourceRecords": 31,
+      "uniqueAids": 31,
+      "categories": {
+        "physical": 22,
+        "visibility": 9,
+        "other": 0,
+        "total": 31,
+        "unspecified": 0,
+        "uncertain": 31,
+        "outstanding": 0,
+        "restored": 0
+      }
+    },
+    "recentFederalView": {
+      "sourceRecords": 14,
+      "uniqueAids": 14,
+      "categories": {
+        "physical": 8,
+        "visibility": 6,
+        "other": 0,
+        "total": 14,
+        "unspecified": 0,
+        "uncertain": 14,
+        "outstanding": 0,
+        "restored": 0
+      }
+    },
+    "duplicateAidGroups": [
+      {
+        "name": "Ship Channel Buoy 3",
+        "lightList": "1335",
+        "records": [
+          {
+            "id": "lnm-100119549355",
+            "created": "2026-03-24",
+            "correction": "Correction Status Unreported",
+            "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discPriAid_2.geojson"
+          },
+          {
+            "id": "lnm-100119438990",
+            "created": "2024-09-24",
+            "correction": "Correction Status Unreported",
+            "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discPriAid_2.geojson"
+          }
+        ]
+      }
+    ],
+    "records": [
+      {
+        "id": "lnm-100119446986",
+        "name": "New Jersey Intracoastal Waterway Light 260",
+        "raw": "STRUCT DEST/HAZ NAV/TRLB",
+        "discrepancy": "STRUCTURE DESTROYED / NAVIGATION HAZARD / TEMPORARY LIGHTED BUOY",
+        "groups": [
+          "physical",
+          "other"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "36000",
+        "aidNumber": "200100293171",
+        "recordId": "100119446986",
+        "officialStatus": "Approved",
+        "created": "2024-10-31",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.59140944444444,
+          39.278348333333334
+        ],
+        "observedPosition": null,
+        "replacement": true,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_1.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.59140999999994,
+            39.278350000000046
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119486098",
+        "name": "New Jersey Intracoastal Waterway Light 310",
+        "raw": "STRUCT DMGD",
+        "discrepancy": "STRUCTURE DAMAGED",
+        "groups": [
+          "physical"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "36165",
+        "aidNumber": "200100293209",
+        "recordId": "100119486098",
+        "officialStatus": "Approved",
+        "created": "2025-03-24",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.65543972222223,
+          39.2174075
+        ],
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_1.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.65543999999994,
+            39.21741000000003
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119486903",
+        "name": "New Jersey Intracoastal Waterway Daybeacon 245",
+        "raw": "STRUCT DEST/TRLB/HAZ NAV",
+        "discrepancy": "STRUCTURE DESTROYED / TEMPORARY LIGHTED BUOY / NAVIGATION HAZARD",
+        "groups": [
+          "physical",
+          "other"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35950",
+        "aidNumber": "200100764900",
+        "recordId": "100119486903",
+        "officialStatus": "Approved",
+        "created": "2025-03-30",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.56014027777778,
+          39.308543611111105
+        ],
+        "observedPosition": null,
+        "replacement": true,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_1.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.56013999999993,
+            39.30854000000005
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119511077",
+        "name": "New Jersey Intracoastal Waterway Daybeacon 348",
+        "raw": "STRUCT DMGD",
+        "discrepancy": "STRUCTURE DAMAGED",
+        "groups": [
+          "physical"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "36300",
+        "aidNumber": "200100293191",
+        "recordId": "100119511077",
+        "officialStatus": "Approved",
+        "created": "2025-08-04",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.69985416666667,
+          39.17133388888889
+        ],
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_1.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.69984999999997,
+            39.17133000000007
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119535553",
+        "name": "New Jersey Intracoastal Waterway Daybeacon 152",
+        "raw": "STRUCT DEST/HAZ NAV/TRLB",
+        "discrepancy": "STRUCTURE DESTROYED / NAVIGATION HAZARD / TEMPORARY LIGHTED BUOY",
+        "groups": [
+          "physical",
+          "other"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35615",
+        "aidNumber": "200100292790",
+        "recordId": "100119535553",
+        "officialStatus": "Approved",
+        "created": "2025-11-17",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.3925538888889,
+          39.468208611111116
+        ],
+        "observedPosition": null,
+        "replacement": true,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.39254999999997,
+            39.468210000000056
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119545102",
+        "name": "New Jersey Intracoastal Waterway Light 40",
+        "raw": "STRUCT DEST/HAZ NAV/TRLB",
+        "discrepancy": "STRUCTURE DESTROYED / NAVIGATION HAZARD / TEMPORARY LIGHTED BUOY",
+        "groups": [
+          "physical",
+          "other"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35125",
+        "aidNumber": "200100292709",
+        "recordId": "100119545102",
+        "officialStatus": "Approved",
+        "created": "2026-02-03",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.12251944444444,
+          39.86179
+        ],
+        "observedPosition": null,
+        "replacement": true,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.12251999999995,
+            39.86179000000004
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119548230",
+        "name": "New Jersey Intracoastal Waterway Light 62",
+        "raw": "DBD DEST/LT IMCH",
+        "discrepancy": "DAYBOARD DESTROYED / INCORRECT LIGHT CHARACTERISTIC",
+        "groups": [
+          "visibility"
+        ],
+        "group": "visibility",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35225",
+        "aidNumber": "200100293364",
+        "recordId": "100119548230",
+        "officialStatus": "Approved",
+        "created": "2026-03-02",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.17535722222223,
+          39.673523055555556
+        ],
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.17535999999996,
+            39.67352000000005
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119548803",
+        "name": "New Jersey Intracoastal Waterway Light 167",
+        "raw": "STRUCT DEST/HAZ NAV/TRLB/OFF STATION",
+        "discrepancy": "STRUCTURE DESTROYED / NAVIGATION HAZARD / TEMPORARY LIGHTED BUOY / OFF STATION",
+        "groups": [
+          "physical",
+          "other"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35675",
+        "aidNumber": "200100292812",
+        "recordId": "100119548803",
+        "officialStatus": "Approved",
+        "created": "2026-03-12",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.40332861111112,
+          39.43459472222222
+        ],
+        "observedPosition": null,
+        "replacement": true,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.40332999999998,
+            39.43459000000007
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119548804",
+        "name": "New Jersey Intracoastal Waterway Daybeacon 171",
+        "raw": "STRUCT DEST/HAZ NAV",
+        "discrepancy": "STRUCTURE DESTROYED / NAVIGATION HAZARD",
+        "groups": [
+          "physical",
+          "other"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35690",
+        "aidNumber": "200100292796",
+        "recordId": "100119548804",
+        "officialStatus": "Approved",
+        "created": "2026-03-12",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.4150738888889,
+          39.433209166666664
+        ],
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.41506999999996,
+            39.43321000000003
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119548805",
+        "name": "New Jersey Intracoastal Waterway Daybeacon 170A",
+        "raw": "STRUCT DEST/HAZ NAV/TRLB",
+        "discrepancy": "STRUCTURE DESTROYED / NAVIGATION HAZARD / TEMPORARY LIGHTED BUOY",
+        "groups": [
+          "physical",
+          "other"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35687",
+        "aidNumber": "100117353333",
+        "recordId": "100119548805",
+        "officialStatus": "Approved",
+        "created": "2026-03-12",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.41709555555556,
+          39.430794999999996
+        ],
+        "observedPosition": null,
+        "replacement": true,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.41709999999995,
+            39.43080000000003
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119595727",
+        "name": "New Jersey Intracoastal Waterway Daybeacon 313",
+        "raw": "STRUCT DEST/HAZ NAV/TRLB",
+        "discrepancy": "STRUCTURE DESTROYED / NAVIGATION HAZARD / TEMPORARY LIGHTED BUOY",
+        "groups": [
+          "physical",
+          "other"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "36175",
+        "aidNumber": "200100293202",
+        "recordId": "100119595727",
+        "officialStatus": "Approved",
+        "created": "2026-04-10",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.6609088888889,
+          39.21415638888889
+        ],
+        "observedPosition": null,
+        "replacement": true,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.66090999999994,
+            39.21416000000005
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119597683",
+        "name": "New Jersey Intracoastal Waterway Daybeacon 44",
+        "raw": "STRUCT DEST/HAZ NAV/TRLB",
+        "discrepancy": "STRUCTURE DESTROYED / NAVIGATION HAZARD / TEMPORARY LIGHTED BUOY",
+        "groups": [
+          "physical",
+          "other"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35160",
+        "aidNumber": "200100292677",
+        "recordId": "100119597683",
+        "officialStatus": "Approved",
+        "created": "2026-04-29",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.1590138888889,
+          39.75660388888889
+        ],
+        "observedPosition": null,
+        "replacement": true,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.15900999999997,
+            39.75660000000005
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119600176",
+        "name": "New Jersey Intracoastal Waterway Light 52",
+        "raw": "LT EXT",
+        "discrepancy": "LIGHT EXTINGUISHED",
+        "groups": [
+          "visibility"
+        ],
+        "group": "visibility",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35195",
+        "aidNumber": "100119365858",
+        "recordId": "100119600176",
+        "officialStatus": "Approved",
+        "created": "2026-05-20",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.14552444444445,
+          39.70611
+        ],
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.14551999999998,
+            39.70611000000008
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119600211",
+        "name": "New Jersey Intracoastal Waterway Buoy 342",
+        "raw": "OFF STATION",
+        "discrepancy": "OFF STATION",
+        "groups": [
+          "physical"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "36280",
+        "aidNumber": "100119116254",
+        "recordId": "100119600211",
+        "officialStatus": "Approved",
+        "created": "2026-05-20",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.69970416666668,
+          39.18230861111111
+        ],
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.69969999999995,
+            39.18231000000003
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119600269",
+        "name": "New Jersey Intracoastal Waterway Daybeacon 178",
+        "raw": "STRUCT DEST/TRUB",
+        "discrepancy": "STRUCTURE DESTROYED / TEMPORARY UNLIGHTED BUOY",
+        "groups": [
+          "physical",
+          "other"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35725",
+        "aidNumber": "200100292809",
+        "recordId": "100119600269",
+        "officialStatus": "Approved",
+        "created": "2026-05-21",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.43531,
+          39.404621666666664
+        ],
+        "observedPosition": null,
+        "replacement": true,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.43530999999996,
+            39.40462000000008
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119600613",
+        "name": "New Jersey Intracoastal Waterway Daybeacon 147",
+        "raw": "STRUCT DEST/HAZ NAV/TRLB",
+        "discrepancy": "STRUCTURE DESTROYED / NAVIGATION HAZARD / TEMPORARY LIGHTED BUOY",
+        "groups": [
+          "physical",
+          "other"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35595",
+        "aidNumber": "200100340599",
+        "recordId": "100119600613",
+        "officialStatus": "Approved",
+        "created": "2026-05-28",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.37934444444444,
+          39.47930027777778
+        ],
+        "observedPosition": null,
+        "replacement": true,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.37933999999996,
+            39.47930000000008
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119603270",
+        "name": "New Jersey Intracoastal Waterway Light 24",
+        "raw": "DBD DEST",
+        "discrepancy": "DAYBOARD DESTROYED",
+        "groups": [
+          "visibility"
+        ],
+        "group": "visibility",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35060",
+        "aidNumber": "200100292688",
+        "recordId": "100119603270",
+        "officialStatus": "Approved",
+        "created": "2026-06-22",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.11151805555555,
+          39.98320944444445
+        ],
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.11151999999998,
+            39.98321000000004
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119608018",
+        "name": "New Jersey Intracoastal Waterway Light 34",
+        "raw": "LT EXT",
+        "discrepancy": "LIGHT EXTINGUISHED",
+        "groups": [
+          "visibility"
+        ],
+        "group": "visibility",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35095",
+        "aidNumber": "200100292706",
+        "recordId": "100119608018",
+        "officialStatus": "Approved",
+        "created": "2026-08-05",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.10548722222222,
+          39.938625555555554
+        ],
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.10548999999997,
+            39.938630000000046
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119612154",
+        "name": "New Jersey Intracoastal Waterway Light 83",
+        "raw": "STRUCT DEST/HAZ NAV/TRLB",
+        "discrepancy": "STRUCTURE DESTROYED / NAVIGATION HAZARD / TEMPORARY LIGHTED BUOY",
+        "groups": [
+          "physical",
+          "other"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35325",
+        "aidNumber": "200100292572",
+        "recordId": "100119612154",
+        "officialStatus": "Approved",
+        "created": "2026-09-08",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.20980555555556,
+          39.608608333333336
+        ],
+        "observedPosition": null,
+        "replacement": true,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.20980999999995,
+            39.608610000000056
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119612642",
+        "name": "New Jersey Intracoastal Waterway Daybeacon 60",
+        "raw": "STRUCT DEST/TRLB",
+        "discrepancy": "STRUCTURE DESTROYED / TEMPORARY LIGHTED BUOY",
+        "groups": [
+          "physical",
+          "other"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35220",
+        "aidNumber": "200100293376",
+        "recordId": "100119612642",
+        "officialStatus": "Approved",
+        "created": "2026-09-11",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.16867055555556,
+          39.680125555555556
+        ],
+        "observedPosition": null,
+        "replacement": true,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.16866999999996,
+            39.68013000000008
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119612904",
+        "name": "Cape May Harbor Range Front Light 4",
+        "raw": "LT EXT",
+        "discrepancy": "LIGHT EXTINGUISHED",
+        "groups": [
+          "visibility"
+        ],
+        "group": "visibility",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "1455",
+        "aidNumber": "200100366209",
+        "recordId": "100119612904",
+        "officialStatus": "Approved",
+        "created": "2026-09-16",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.87643638888888,
+          38.95216472222223
+        ],
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.87643999999995,
+            38.95216000000005
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119613095",
+        "name": "Manasquan River Daybeacon 11",
+        "raw": "STRUCT DEST/HAZ NAV",
+        "discrepancy": "STRUCTURE DESTROYED / NAVIGATION HAZARD",
+        "groups": [
+          "physical",
+          "other"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "34975",
+        "aidNumber": "200100293414",
+        "recordId": "100119613095",
+        "officialStatus": "Approved",
+        "created": "2026-09-21",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.06655833333333,
+          40.09028166666667
+        ],
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.06655999999998,
+            40.090280000000064
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119614001",
+        "name": "New Jersey Intracoastal Lighted Buoy 55",
+        "raw": "OFF STATION",
+        "discrepancy": "OFF STATION",
+        "groups": [
+          "physical"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35200",
+        "aidNumber": "100119498419",
+        "recordId": "100119614001",
+        "officialStatus": "Approved",
+        "created": "2026-10-01",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.15297027777778,
+          39.69269055555555
+        ],
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_3.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.15296999999998,
+            39.69269000000003
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119614091",
+        "name": "New Jersey Intracoastal Waterway Daybeacon 49",
+        "raw": "DBD DEST",
+        "discrepancy": "DAYBOARD DESTROYED",
+        "groups": [
+          "visibility"
+        ],
+        "group": "visibility",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35180",
+        "aidNumber": "200100292694",
+        "recordId": "100119614091",
+        "officialStatus": "Approved",
+        "created": "2026-10-05",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.14639277777779,
+          39.726375000000004
+        ],
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_3.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.14638999999994,
+            39.72638000000006
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119614319",
+        "name": "New Jersey Intracoastal Waterway Light 145",
+        "raw": "LT EXT",
+        "discrepancy": "LIGHT EXTINGUISHED",
+        "groups": [
+          "visibility"
+        ],
+        "group": "visibility",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35590",
+        "aidNumber": "200100292803",
+        "recordId": "100119614319",
+        "officialStatus": "Approved",
+        "created": "2026-10-06",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.37437249999999,
+          39.48390361111111
+        ],
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_3.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.37436999999994,
+            39.48390000000006
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119614321",
+        "name": "New Jersey Intracoastal Waterway Buoy 131A",
+        "raw": "OFF STATION",
+        "discrepancy": "OFF STATION",
+        "groups": [
+          "physical"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35540.1",
+        "aidNumber": "100119269732",
+        "recordId": "100119614321",
+        "officialStatus": "Approved",
+        "created": "2026-10-06",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.36247888888889,
+          39.49889527777778
+        ],
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_3.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.36247999999995,
+            39.49890000000005
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119614322",
+        "name": "New Jersey Intracoastal Waterway Lighted Buoy 130",
+        "raw": "MISSING",
+        "discrepancy": "MISSING",
+        "groups": [
+          "physical"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35536",
+        "aidNumber": "100119234928",
+        "recordId": "100119614322",
+        "officialStatus": "Approved",
+        "created": "2026-10-06",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.34532055555555,
+          39.5
+        ],
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_3.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.34531999999996,
+            39.50000000000006
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119614323",
+        "name": "New Jersey Intracoastal Waterway Light 172",
+        "raw": "STRUCT DMGD",
+        "discrepancy": "STRUCTURE DAMAGED",
+        "groups": [
+          "physical"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35695",
+        "aidNumber": "200100292807",
+        "recordId": "100119614323",
+        "officialStatus": "Approved",
+        "created": "2026-10-06",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.41773722222223,
+          39.42977527777778
+        ],
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_3.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.41773999999998,
+            39.42978000000005
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119614324",
+        "name": "New Jersey Intracoastal Waterway Daybeacon 207",
+        "raw": "DBD DMGD",
+        "discrepancy": "DAYBOARD DAMAGED",
+        "groups": [
+          "visibility"
+        ],
+        "group": "visibility",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35830",
+        "aidNumber": "200100292608",
+        "recordId": "100119614324",
+        "officialStatus": "Approved",
+        "created": "2026-10-06",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.44973666666667,
+          39.35971972222222
+        ],
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_3.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.44973999999996,
+            39.35972000000004
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119614905",
+        "name": "New Jersey Intracoastal Waterway Daybeacon 58",
+        "raw": "DBD DEST",
+        "discrepancy": "DAYBOARD DESTROYED",
+        "groups": [
+          "visibility"
+        ],
+        "group": "visibility",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35215",
+        "aidNumber": "200100293369",
+        "recordId": "100119614905",
+        "officialStatus": "Approved",
+        "created": "2026-10-13",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.16404944444444,
+          39.685381388888885
+        ],
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_3.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.16404999999997,
+            39.685380000000066
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119615810",
+        "name": "New Jersey Intracoastal Waterway Buoy 384",
+        "raw": "MISSING",
+        "discrepancy": "MISSING",
+        "groups": [
+          "physical"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "36425",
+        "aidNumber": "100119284586",
+        "recordId": "100119615810",
+        "officialStatus": "Approved",
+        "created": "2026-10-19",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.764585,
+          39.098038888888894
+        ],
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discFedAid_3.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.76458999999994,
+            39.098040000000026
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119438990",
+        "name": "Ship Channel Buoy 3",
+        "raw": "SINKING",
+        "discrepancy": "SINKING",
+        "groups": [
+          "physical"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "1335",
+        "aidNumber": "200100358493",
+        "recordId": "100119438990",
+        "officialStatus": "",
+        "created": "2024-09-24",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.57911666666666,
+          39.30483333333333
+        ],
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discPriAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.57911999999999,
+            39.30483000000004
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119511721",
+        "name": "West Point Island Buoy 1",
+        "raw": "ADRIFT",
+        "discrepancy": "ADRIFT",
+        "groups": [
+          "physical"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "35078",
+        "aidNumber": "100119490269",
+        "recordId": "100119511721",
+        "officialStatus": "Approved",
+        "created": "2025-08-11",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.09967777777777,
+          39.95406666666667
+        ],
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discPriAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.09967999999998,
+            39.95407000000006
+          ]
+        }
+      },
+      {
+        "id": "lnm-100119549355",
+        "name": "Ship Channel Buoy 3",
+        "raw": "SINKING",
+        "discrepancy": "SINKING",
+        "groups": [
+          "physical"
+        ],
+        "group": "physical",
+        "status": "uncertain",
+        "statusLabel": "Status uncertain",
+        "correction": "Correction Status Unreported",
+        "lightList": "1335",
+        "aidNumber": "200100358493",
+        "recordId": "100119549355",
+        "officialStatus": "Approved",
+        "created": "2026-03-24",
+        "updated": null,
+        "reported": null,
+        "corrected": null,
+        "chartedPosition": [
+          -74.57911666666666,
+          39.30483333333333
+        ],
+        "observedPosition": null,
+        "replacement": false,
+        "reportCount": 1,
+        "sourceUrl": "https://www.navcen.uscg.gov/sites/default/files/msi/discPriAid_2.geojson",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [
+            -74.57911999999999,
+            39.30483000000004
+          ]
+        }
+      }
+    ]
+  }
+}

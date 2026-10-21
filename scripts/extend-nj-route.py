@@ -40,7 +40,7 @@ for id in ['8533005','8532885','8532786','8532715','8532585','8532591']:
  st=catalog[id];stations=[s for s in stations if s['id']!=id];stations.append(dict(id=id,name=st['name'],lat=st['lat'],lon=st['lng'],sub=st['type']=='S',**near(st['lat'],st['lng'])))
 route['stations']=sorted(stations,key=lambda s:s['distance']);route['points']=points;route['totalNm']=points[-1][3];route['name']='Cape May → Manasquan Inlet · inside passage';route['recordedDates']=['2022-08-29','2025-07-18']
 ends=[e for e in route['endpoints'] if e['key']!='toms-river']
-for key,name,lat,lon in [('toms-river','Toms River · ICW junction',39.936,-74.106),('lavallette','Lavallette · ICW',39.970,-74.103),('bay-head','Bay Head · canal entrance',40.067,-74.054)]:
+for key,name,lat,lon in [('toms-river','Toms River · ICW junction',39.936,-74.106),('lavallette','Lavallette · ICW',39.970,-74.103),('bay-head','Bay Head · canal entrance',40.067,-74.054),('pp-canal-north','Point Pleasant Canal · north entrance',40.0915,-74.0653)]:
  q=near(lat,lon);ends.append(dict(key=key,name=name,distance=q['distance'],lat=q['routeLat'],lon=q['routeLon']))
 ends.append(dict(key='manasquan',name='Manasquan Inlet',distance=points[-1][3],lat=points[-1][0],lon=points[-1][1]));route['endpoints']=sorted(ends,key=lambda x:x['distance'])
 route['extension']=dict(recordedDate='2025-07-18',source='Owner-supplied recorded GPX, northern inside portion only',joinStartNm=original[cut][3],joinEndNm=joinEnd,joinMethod='Short smooth main-channel connector; marina detour omitted. Connector checked against NOAA ENC land polygons; not a recorded or depth-validated leg.',openWaterTiming='Normalized to 26 kn; recorded slow-section timing retained',movingHours=points[-1][2]/3600)

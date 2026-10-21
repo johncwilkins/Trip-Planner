@@ -52,6 +52,9 @@ def main():
     notices=node("const U=require('./dist/uscg-notices.js');let s='';process.stdin.on('data',x=>s+=x);process.stdin.on('end',()=>{const d=JSON.parse(s);process.stdout.write(JSON.stringify(U.trackChanges(d.notices,d.prior,d.now)));});",dict(notices=notices,prior=prior.get('notices',[]),now=now))
     out=dict(schemaVersion=1,source='USCG NAVCEN geographic Local Notice to Mariners / MSI files',sourceUrl='https://www.navcen.uscg.gov/msi',retrievedAt=now,refreshCadenceDays=7,complete=not failed,lastCompleteAt=now if not failed else prior.get('lastCompleteAt'),unavailableFiles=failed,coverage='NJ recorded route plus a five-nautical-mile bounding margin; unlocated District 5 notices included',files=files,notices=notices)
     tmp=p.with_suffix('.tmp');tmp.write_text(json.dumps(out,separators=(',',':')));tmp.replace(p)
+    audit=node("const A=require('./scripts/audit-uscg-aids.cjs');let s='';process.stdin.on('data',x=>s+=x);process.stdin.on('end',()=>{const d=JSON.parse(s);process.stdout.write(JSON.stringify(A.buildAudit(d.before,d.after)));});",dict(before=prior,after=out))
+    audit_path=ROOT/'dist/nj/aid-audit.json'
+    audit_temp=audit_path.with_suffix('.tmp');audit_temp.write_text(json.dumps(audit,indent=2));audit_temp.replace(audit_path)
     print(f'Coast Guard snapshot saved: {len(files)} source files, {len(notices)} regional notices; {len(failed)} unavailable files; {now}',flush=True)
     write_status('complete' if not failed else 'partial',unavailableFiles=failed)
 def write_status(status,**details):

@@ -85,3 +85,5 @@ require("./check-nj-bridge-schedules.cjs");
 require("./check-uscg-notices.cjs");
 
 require("./check-nj-canal.cjs");
+
+require("./check-uscg-aids.cjs");

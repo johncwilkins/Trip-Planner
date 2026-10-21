@@ -14,7 +14,7 @@ assert.equal(U.inRegion({...n,geometry:null},{west:-75,east:-74,south:39,north:4
 assert.equal(U.inRegion({...n,geometry:null,district:1},{west:-75,east:-74,south:39,north:40}),false);
 assert.equal(U.merge([n,n]).length,1);
 assert.equal(U.merge([n,{...n,geometry:{type:'Point',coordinates:[-74.46,39.35]}}])[0].geometry.type,'GeometryCollection');
-assert.deepEqual(U.files({bridge_:{counter:2,timestamp:1},buoys_:{counter:12},discFedAidCor_:{counter:1}}).map(f=>f.url),[U.BASE+'bridge_1.geojson',U.BASE+'bridge_2.geojson']);
+assert.deepEqual(U.files({bridge_:{counter:2,timestamp:1},buoys_:{counter:12},discFedAidCor_:{counter:1}}).map(f=>f.url),[U.BASE+'bridge_1.geojson',U.BASE+'bridge_2.geojson',U.BASE+'discFedAidCor_1.geojson']);
 const fs=require('node:fs'),p=require('node:path');const cache=p.join(__dirname,'../dist/nj/uscg-notices.json');
 if(fs.existsSync(cache)){const snapshot=JSON.parse(fs.readFileSync(cache));assert.equal(snapshot.schemaVersion,1);assert.ok(Number.isFinite(Date.parse(snapshot.retrievedAt)));assert.ok(snapshot.files.length>10);assert.equal(new Set(snapshot.notices.map(n=>n.id)).size,snapshot.notices.length);for(const n of snapshot.notices){assert.ok(n.title&&n.sourceUrl.startsWith(U.BASE));}}
 console.log('USCG notices: date overlap, cancelled records, geographic corridor, crossing lines, enclosing polygons, broad notices, deduplication and live-cache schema passed.');
