@@ -3,6 +3,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      notices_only:
+        description: 'Notices only: fetch new Coast Guard notices without refreshing NOAA tides'
+        type: boolean
+        default: true
   schedule:
     - cron: '0 6,7 * * 1'
 permissions:
@@ -36,15 +41,26 @@ jobs:
         id: refresh
         env:
           EVENT_NAME: ${{ github.event_name }}
+          NOTICES_ONLY: ${{ inputs.notices_only }}
         run: |
           python - <<'PY'
           import datetime,os
           from zoneinfo import ZoneInfo
           local=datetime.datetime.now(ZoneInfo('America/New_York'))
-          refresh=os.environ['EVENT_NAME']=='workflow_dispatch' or (os.environ['EVENT_NAME']=='schedule' and local.hour==2)
+          refresh=(os.environ['EVENT_NAME']=='workflow_dispatch' and os.environ.get('NOTICES_ONLY')!='true') or (os.environ['EVENT_NAME']=='schedule' and local.hour==2)
           with open(os.environ['GITHUB_OUTPUT'],'a') as f:
               f.write('run='+str(refresh).lower()+'\n')
           PY
+      - name: Refresh Coast Guard notices
+        if: steps.refresh.outputs.run == 'true' || (github.event_name == 'workflow_dispatch' && inputs.notices_only) || !hashFiles('dist/nj/uscg-notices.json')
+        run: |
+          if ! python scripts/refresh-uscg-notices.py; then
+            if [ -f dist/nj/uscg-notices.json ]; then
+              echo '::warning::Coast Guard refresh failed; retaining the prior timestamped snapshot.'
+            else
+              exit 1
+            fi
+          fi
       - name: Refresh saved weekly current and tide predictions
         if: steps.refresh.outputs.run == 'true'
         run: python scripts/refresh-weekly.py
@@ -83,7 +99,7 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add README.md .gitignore dist config scripts
           if ! git diff --cached --quiet; then
-            git commit -m 'Import planner source or refresh weekly NOAA cache'
+            git commit -m 'Import planner source or refresh marine data caches'
             git push
           fi
       - name: Upload Pages site
