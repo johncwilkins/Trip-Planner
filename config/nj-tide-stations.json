@@ -144,18 +144,6 @@
     "routeLon": -74.664695
   },
   {
-    "id": "all-seasons",
-    "name": "Ocean City, Beesleys Point",
-    "lat": 39.25892972222222,
-    "lon": -74.6245725,
-    "sourceStationId": "8534975",
-    "sourceStationName": "Beesleys Point · Great Egg Harbor Bay",
-    "sourceLat": 39.2883,
-    "sourceLon": -74.6283,
-    "locationSource": "https://www.navcen.uscg.gov/sites/default/files/pdf/lightLists/LightList_V2_2024.pdf",
-    "locationNote": "Near NJICW red Light 280 (LLNR 36065), north of All Seasons Marina."
-  },
-  {
     "id": "8534836",
     "name": "Longport (inside), Great Egg Harbor Inlet",
     "lat": 39.3083,
@@ -166,18 +154,6 @@
     "distance": 35.71311382721145,
     "routeLat": 39.320602,
     "routeLon": -74.529306
-  },
-  {
-    "id": "ac-railroad",
-    "name": "Great Thoroughfare, Atlantic City",
-    "lat": 39.35971111111111,
-    "lon": -74.44973277777777,
-    "sourceStationId": "8534638",
-    "sourceStationName": "Absecon Channel, State Route 87 bridge",
-    "sourceLat": 39.385,
-    "sourceLon": -74.425,
-    "locationSource": "https://www.weather.gov/media/phi/BouyData.pdf",
-    "locationNote": "Near NJICW green daybeacon 207 (LLNR 35830), the small island and Bader Field runway end; separate from the rail bridge crossing."
   },
   {
     "id": "8534638",
@@ -396,32 +372,104 @@
     "routeLon": -74.10178681881848
   },
   {
-    "id": "8533055",
-    "name": "Coates Point",
-    "lat": 39.9483,
-    "lon": -74.115,
-    "sub": true,
-    "offsetNm": 0.697,
-    "seconds": 23000.244008228732,
-    "distance": 87.66961807509873,
-    "routeLat": 39.937153,
-    "routeLon": -74.119224
-  },
-  {
     "id": "8533051",
     "name": "Toms River (town), Toms River",
     "lat": 39.95000076293945,
     "lon": -74.19830322265625,
     "sub": false,
-    "offsetNm": 2.781,
-    "seconds": 23519.247008249713,
-    "distance": 88.73517201959342,
-    "routeLat": 39.945562,
-    "routeLon": -74.138159
+    "offsetNm": 4.2339586775985385,
+    "seconds": 22946.054576930357,
+    "distance": 87.37908478393483,
+    "routeLat": 39.94052955288889,
+    "routeLon": -74.10715503377779
+  },
+  {
+    "id": "8533055",
+    "name": "Coates Point",
+    "lat": 39.9483,
+    "lon": -74.115,
+    "sub": true,
+    "offsetNm": 0.57089702375747,
+    "seconds": 22950.6425314261,
+    "distance": 87.41222001084853,
+    "routeLat": 39.94106,
+    "routeLon": -74.10696
+  },
+  {
+    "id": "8533005",
+    "name": "Goose Creek entrance",
+    "lat": 39.9633,
+    "lon": -74.115,
+    "sub": true,
+    "offsetNm": 0.594470781599051,
+    "seconds": 23198.63047053183,
+    "distance": 88.71562536833973,
+    "routeLat": 39.960883631749844,
+    "routeLon": -74.10247270861082
+  },
+  {
+    "id": "8532885",
+    "name": "Ocean Beach",
+    "lat": 39.9883,
+    "lon": -74.0683,
+    "sub": true,
+    "offsetNm": 1.3566744215108304,
+    "seconds": 23634.56656954973,
+    "distance": 91.86405275013563,
+    "routeLat": 40.006782085875635,
+    "routeLon": -74.08526927455306
+  },
+  {
+    "id": "8532786",
+    "name": "Mantoloking",
+    "lat": 40.0367,
+    "lon": -74.0533,
+    "sub": true,
+    "offsetNm": 0.08945628735779378,
+    "seconds": 24112.69288532361,
+    "distance": 94.18018101502403,
+    "routeLat": 40.037054057195576,
+    "routeLon": -74.05519027758247
+  },
+  {
+    "id": "8532715",
+    "name": "Beaverdam Creek entrance",
+    "lat": 40.0617,
+    "lon": -74.0617,
+    "sub": true,
+    "offsetNm": 0.46349282696580224,
+    "seconds": 24868.38907819268,
+    "distance": 95.60995262319877,
+    "routeLat": 40.05944330889429,
+    "routeLon": -74.05205432041204
+  },
+  {
+    "id": "8532585",
+    "name": "Brielle, Route 35 bridge",
+    "lat": 40.105,
+    "lon": -74.055,
+    "sub": true,
+    "offsetNm": 0.10124981857802694,
+    "seconds": 26252.33396997622,
+    "distance": 98.78775340391665,
+    "routeLat": 40.10364550950444,
+    "routeLon": -74.0536866156562
+  },
+  {
+    "id": "8532591",
+    "name": "Manasquan Inlet, USCG Station",
+    "lat": 40.1017,
+    "lon": -74.035,
+    "sub": true,
+    "offsetNm": 0.04910410427241009,
+    "seconds": 26740.798766920918,
+    "distance": 99.79387847643038,
+    "routeLat": 40.10237666098911,
+    "routeLon": -74.03439945358225
   },
   {
     "id": "8534720",
-    "name": "Atlantic City · ocean tide source",
+    "name": "Atlantic City \u00b7 ocean tide source",
     "lat": 39.356666564941406,
     "lon": -74.41805267333984,
     "sub": false,
@@ -429,10 +477,34 @@
   },
   {
     "id": "8536110",
-    "name": "Cape May · bridge tide source",
+    "name": "Cape May \u00b7 bridge tide source",
     "lat": 38.96799850463867,
     "lon": -74.95999908447266,
     "sub": false,
     "bridgeSourceOnly": true
+  },
+  {
+    "id": "all-seasons",
+    "name": "Ocean City, Beesleys Point",
+    "lat": 39.25892972222222,
+    "lon": -74.6245725,
+    "sourceStationId": "8534975",
+    "sourceStationName": "Beesleys Point \u00b7 Great Egg Harbor Bay",
+    "sourceLat": 39.2883,
+    "sourceLon": -74.6283,
+    "locationSource": "https://www.navcen.uscg.gov/sites/default/files/pdf/lightLists/LightList_V2_2024.pdf",
+    "locationNote": "Near NJICW red Light 280 (LLNR 36065), north of All Seasons Marina."
+  },
+  {
+    "id": "ac-railroad",
+    "name": "Great Thoroughfare, Atlantic City",
+    "lat": 39.35971111111111,
+    "lon": -74.44973277777777,
+    "sourceStationId": "8534638",
+    "sourceStationName": "Absecon Channel, State Route 87 bridge",
+    "sourceLat": 39.385,
+    "sourceLon": -74.425,
+    "locationSource": "https://www.weather.gov/media/phi/BouyData.pdf",
+    "locationNote": "Near NJICW green daybeacon 207 (LLNR 35830), the small island and Bader Field runway end; separate from the rail bridge crossing."
   }
 ]

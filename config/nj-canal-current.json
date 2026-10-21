@@ -1,0 +1,23 @@
+{
+  "stationId": "ACT3996",
+  "name": "Point Pleasant Canal, north bridge",
+  "bin": 1,
+  "sub": true,
+  "startNm": 96.18270879735512,
+  "endNm": 97.8183869695906,
+  "defaultThroughWaterKnots": 6.1,
+  "source": "https://tidesandcurrents.noaa.gov/noaacurrents/annual.html?id=ACT3996_1",
+  "calibration": {
+    "recordedDate": "2025-07-18",
+    "method": "Median GPS speed over ground minus interpolated NOAA along-canal current at recorded times",
+    "note": "Approximate through-water speed; one north-bridge prediction proxy applied along the canal. Wind and local variation are not modeled."
+  },
+  "startPosition": [
+    40.0673,
+    -74.0544
+  ],
+  "endPosition": [
+    40.0913,
+    -74.066
+  ]
+}

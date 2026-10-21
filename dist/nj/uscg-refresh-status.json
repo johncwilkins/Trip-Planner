@@ -1,1 +1,1 @@
-{"status":"failed","attemptedAt":"2026-10-21T14:59:43.886902+00:00","error":"HTTP Error 403: Forbidden"}
+{"status":"partial","attemptedAt":"2026-10-21T15:13:48.980548+00:00","unavailableFiles":[{"url":"https://www.navcen.uscg.gov/sites/default/files/msi/safeZoneLine_1.geojson","error":"HTTP Error 404: Not Found"}]}

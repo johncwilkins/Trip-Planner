@@ -60,7 +60,7 @@ for(const reverse of [false,true]){
  const a=route.endpoints[reverse?route.endpoints.length-1:0],b=route.endpoints[reverse?0:route.endpoints.length-1];
  for(let t=start-10*3600000;t<=start+10*3600000;t+=600000){
   const q=N.passage(route,profile,a,b,t,{}, {boatHeightFt:15,marginFt:2,waterLevel:(id,time)=>N.tide(data[id],time).height});
-  assert.equal(q.bridges.length,16);assert.equal(q.uncheckedBridges.length,0);assert.equal(q.blockedBridges.length,0);
+  assert.equal(q.bridges.length,23);assert.equal(q.uncheckedBridges.length,0);assert.equal(q.blockedBridges.length,0);
   for(const bridge of q.bridges){assert.equal(q.eta(bridge.distance),bridge.arrival);if(!bridge.movable||bridge.status==='closed-pass')assert.equal(bridge.delayMinutes,0);}
  }
  const tooTall=N.passage(route,profile,a,b,start,{}, {boatHeightFt:80,marginFt:2,waterLevel:(id,time)=>N.tide(data[id],time).height});assert.ok(tooTall.blockedBridges.length>0);
@@ -83,3 +83,5 @@ console.log('Albany/Dorset shared wait verified in both directions, including bl
 require("./check-nj-bridge-schedules.cjs");
 
 require("./check-uscg-notices.cjs");
+
+require("./check-nj-canal.cjs");

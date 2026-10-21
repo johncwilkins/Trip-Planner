@@ -1,5 +1,5 @@
 {
-  "reviewedDate": "2026-10-15",
+  "reviewedDate": "2026-10-21",
   "geometrySource": "https://gis.charttools.noaa.gov/arcgis/rest/services/encdirect/enc_harbour/MapServer",
   "clearanceSource": "https://nauticalcharts.noaa.gov/publications/coast-pilot/files/cp3/CPB3_C05_WEB.pdf#page=3",
   "excluded": [
@@ -10,20 +10,17 @@
     {
       "name": "Cape May Canal Route 109, railroad and Route 162 bridges",
       "reason": "Outside this recorded Canyon Club to Dillon\u2019s Creek track."
-    },
-    {
-      "name": "Route 37 / Toms River bridges",
-      "reason": "North of the selected route to Dillon\u2019s Creek."
     }
   ],
-  "count": 16,
-  "movableCount": 8,
+  "count": 23,
+  "movableCount": 14,
   "notes": [
     "Route 72 parallel spans grouped as one crossing.",
     "Closed/fixed clearances are feet above MHW, not MLLW.",
     "Tide adjustment uses published MHW-MLLW and predictions from the same named proxy station; no claim of a bridge-local gauge.",
     "Temporary clearance changes, closed-bridge positions, opening schedules and live notices are not automatically monitored.",
     "Crossing confirmed by track owner. Sparse recorded track is about 0.08 nm from the charted span; timing uses its nearest passage position.",
-    "Optional Albany\u2013Dorset coordination assumes a single wait for both indicated openings, per owner experience; it does not calculate or guarantee scheduled openings."
+    "Optional Albany\u2013Dorset coordination assumes a single wait for both indicated openings, per owner experience; it does not calculate or guarantee scheduled openings.",
+    "Northern extension bridge geometry reviewed against NOAA ENCs US5NJ1OL, US5NJ1PM and US5NJ1QM. Mathis and Tunney are separate checks. Route 13 and Route 88 also check published fully raised clearances."
   ]
 }

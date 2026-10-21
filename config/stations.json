@@ -498,5 +498,15 @@
     "bin": 1,
     "depth": "Not specified",
     "sub": true
+  },
+  {
+    "id": "ACT3996",
+    "name": "Point Pleasant Canal, north bridge",
+    "stationName": "Point Pleasant Canal, north bridge",
+    "lat": 40.08333,
+    "lon": -74.06667,
+    "bin": 1,
+    "depth": "Not specified",
+    "sub": true
   }
 ]
