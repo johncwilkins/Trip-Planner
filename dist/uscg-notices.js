@@ -16,7 +16,21 @@ function normalize(f,file){
 }
 function inRegion(n,bounds){const pp=positions(n.geometry);return pp.length?Math.min(...pp.map(p=>p[0]))<=bounds.east&&Math.max(...pp.map(p=>p[0]))>=bounds.west&&Math.min(...pp.map(p=>p[1]))<=bounds.north&&Math.max(...pp.map(p=>p[1]))>=bounds.south:Number(n.district)===5;}
 function merge(notices){const out=new Map();for(const n of notices){if(!n)continue;const old=out.get(n.id);if(!old||(n.aidSource?.correctedFile&&!old.aidSource?.correctedFile))out.set(n.id,n);else if(n.geometry&&JSON.stringify(old.geometry)!==JSON.stringify(n.geometry)){old.geometry={type:'GeometryCollection',geometries:[...(old.geometry?.type==='GeometryCollection'?old.geometry.geometries:old.geometry?[old.geometry]:[]),n.geometry]};}}return [...out.values()];}
-function active(n,start,end=start){return (!n.begin||n.begin<=end)&&(!n.end||n.end>=start);}
+// NAVCEN publication windows can surround a one-day event by many months.
+// Narrow only an explicit, single-date restriction with an all-other-times clause.
+// Ambiguous, recurring and multi-date notices retain their source window.
+function eventWindow(n){
+ if(n.category!=='Bridge notice')return null;
+ const prose=n.description.split(/Mariners are advised/i).slice(1).join('Mariners are advised');
+ if(!prose||!/at all other times/i.test(prose)||!/closed|closure|will not open/i.test(prose)||/each|every|daily|weekdays|weekends|Monday through|Monday to/i.test(prose))return null;
+ const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
+ const dates=[...prose.matchAll(/\b(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2}),?\s+(20\d{2})\b/gi)];
+ if(dates.length!==1||!new RegExp('\\bon\\s+(?:(?:Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday),?\\s+)?'+dates[0][0].replace(/\s+/g,'\\s+'),'i').test(prose))return null;
+ const m=dates[0],day=m[3]+'-'+String(months.findIndex(x=>x.toLowerCase()===m[1].toLowerCase())+1).padStart(2,'0')+'-'+m[2].padStart(2,'0');
+ if(date(day)!==day||(n.begin&&day<n.begin)||(n.end&&day>n.end))return null;
+ return {begin:day,end:day};
+}
+function active(n,start,end=start){const w=eventWindow(n)||n;return (!w.begin||w.begin<=end)&&(!w.end||w.end>=start);}
 function pointSegment(p,a,b){const dx=b[0]-a[0],dy=b[1]-a[1],z=dx*dx+dy*dy,t=z?Math.max(0,Math.min(1,((p[0]-a[0])*dx+(p[1]-a[1])*dy)/z)):0;return Math.hypot(p[0]-a[0]-t*dx,p[1]-a[1]-t*dy);}
 function intersects(a,b,c,d){const cross=(u,v,w)=>(v[0]-u[0])*(w[1]-u[1])-(v[1]-u[1])*(w[0]-u[0]),x=cross(a,b,c),y=cross(a,b,d),z=cross(c,d,a),w=cross(c,d,b);return x*y<=0&&z*w<=0&&Math.max(Math.min(a[0],b[0]),Math.min(c[0],d[0]))<=Math.min(Math.max(a[0],b[0]),Math.max(c[0],d[0]))&&Math.max(Math.min(a[1],b[1]),Math.min(c[1],d[1]))<=Math.min(Math.max(a[1],b[1]),Math.max(c[1],d[1]));}
 function inside(p,ring){let yes=false;for(let i=0,j=ring.length-1;i<ring.length;j=i++){const a=ring[i],b=ring[j];if((a[1]>p[1])!==(b[1]>p[1])&&p[0]<(b[0]-a[0])*(p[1]-a[1])/(b[1]-a[1])+a[0])yes=!yes;}return yes;}
@@ -59,5 +73,5 @@ function recentReason(n,now=Date.now(),days=90){
  if(n.category==='Bridge notice'&&/clos(?:ed|ure)|will not open|unable to open|restricted|restriction|clearance.*reduc/i.test(text))return 'Existing bridge restriction';
  return null;
 }
-root.USCGNotices={contentKey,trackChanges,readable,headline,recentReason,BASE,SOURCE,files,normalize,inRegion,merge,active,nearRoute,positions};if(typeof module!=='undefined')module.exports=root.USCGNotices;
+root.USCGNotices={contentKey,trackChanges,readable,headline,recentReason,BASE,SOURCE,files,normalize,inRegion,merge,eventWindow,active,nearRoute,positions};if(typeof module!=='undefined')module.exports=root.USCGNotices;
 })(globalThis);

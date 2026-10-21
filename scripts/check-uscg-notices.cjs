@@ -33,3 +33,17 @@ assert.equal(U.trackChanges([{...shoal,modified:'2026-10-22'}],[shoal],'2026-10-
 assert.equal(U.trackChanges([{...shoal,description:'New shoaling depth report'}],[shoal],'2026-10-22')[0].contentChangedAt,'2026-10-22');
 assert.equal(U.trackChanges([shoal],[],'2026-10-22')[0].contentChangedAt,null,'First import is not a new hazard');
 console.log('Notice relevance: old shoaling, timestamp-only edits, content changes, routine records and active bridge restrictions passed.');
+
+// Real NAVCEN record: publication window is not the one-day triathlon closure.
+const triathlon={"id": "msi-49127", "category": "Bridge notice", "begin": "2026-07-20", "end": "2027-01-16", "description": "General/Bridges/Temp Deviation\n\nFrom: 2026-07-20 To: 2027-01-16\n\nLocation:\n39-21-13.176N/074-27-24.084W\n\nBridge Name: United States 40-322 Bridge\n\nNJICW - Inside Thorofare\n\nMariners are advised that the highway drawbridge United States 40-322 (Albany Avenue) Bridge across New Jersey Intracoastal Waterway, Inside Thorofare, mile 70.0, at Atlantic City, NJ, will be maintained in the closed-to-navigation position to facilitate the 16th Annual Atlantic City Triathlon. The bridge will remain in the closed position from 6 a.m. through 12 p.m. on Sunday, August 9, 2026. The bridge will be able to open for emergencies, if at least 30 minutes notice is given. At all other times, the drawbridge will operate in accordance with the operating regulations set out in Title 33 Code of Federal Regulations Part 117.733(h). Mariners should adjust their transits accordingly and should use caution when transiting the area. "};
+assert.ok(triathlon);
+assert.deepEqual(U.eventWindow(triathlon),{begin:'2026-08-09',end:'2026-08-09'});
+for(const day of ['2026-07-20','2026-08-08','2026-08-10','2026-10-21','2027-01-16'])assert.equal(U.active(triathlon,day),false,day);
+assert.equal(U.active(triathlon,'2026-08-09'),true);
+assert.equal(U.active(triathlon,'2026-08-08','2026-08-10'),true);
+assert.equal(U.eventWindow({...triathlon,description:triathlon.description+' Work also occurs August 10, 2026.'}),null);
+assert.equal(U.eventWindow({...triathlon,description:triathlon.description.replace('on Sunday,','every Sunday,')}),null);
+assert.equal(U.eventWindow({...triathlon,description:'Construction from August 9, 2026 through September 9, 2026; bridge closed. At all other times normal operations.'}),null);
+assert.equal(U.eventWindow({...triathlon,description:triathlon.description.replace('August 9','February 30')}),null);
+assert.equal(triathlon.begin,'2026-07-20','Original source dates remain unchanged');
+console.log('Event-date filtering: actual triathlon, adjacent days, overlapping trips, recurring/multiple/invalid dates and source preservation passed.');
