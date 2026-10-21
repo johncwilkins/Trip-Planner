@@ -1,0 +1,20 @@
+const assert=require('node:assert/strict'),U=require('../dist/uscg-notices.js');
+const file={key:'bridge_',url:U.BASE+'bridge_1.geojson',sourceUpdatedAt:'2026-10-21T00:00:00Z'};
+const n=U.normalize({id:7,geometry:{type:'Point',coordinates:[-74.45,39.35]},properties:{MSI_UID:7,TITLE:'Bridge work',BEGIN_DATE:Date.parse('2026-06-01T00:00Z'),END_DATE:Date.parse('2026-09-30T23:59:59Z'),DESCRIPTION:'Full notice',ATU:5}},file);
+assert.equal(n.begin,'2026-06-01');assert.equal(n.end,'2026-09-30');assert.equal(U.active(n,'2026-09-30'),true);assert.equal(U.active(n,'2026-10-01'),false);assert.equal(U.active(n,'2026-05-31','2026-06-01'),true);
+assert.equal(U.normalize({id:8,properties:{MSI_UID:8,STATUS:'Cancelled'}},file),null);
+const route=[[-74.5,39.3],[-74.4,39.4]];
+assert.equal(U.nearRoute(n.geometry,route),true);
+assert.equal(U.nearRoute({type:'Point',coordinates:[-75,40]},route),false);
+// Crossing geometry with both endpoints beyond the corridor still intersects.
+assert.equal(U.nearRoute({type:'LineString',coordinates:[[-74.6,39.5],[-74.3,39.2]]},route,.01),true);
+assert.equal(U.nearRoute({type:'Polygon',coordinates:[[[-74.6,39.2],[-74.3,39.2],[-74.3,39.5],[-74.6,39.5],[-74.6,39.2]]]},route,.01),true);
+assert.equal(U.nearRoute(null,route),true);
+assert.equal(U.inRegion({...n,geometry:null},{west:-75,east:-74,south:39,north:40}),true);
+assert.equal(U.inRegion({...n,geometry:null,district:1},{west:-75,east:-74,south:39,north:40}),false);
+assert.equal(U.merge([n,n]).length,1);
+assert.equal(U.merge([n,{...n,geometry:{type:'Point',coordinates:[-74.46,39.35]}}])[0].geometry.type,'GeometryCollection');
+assert.deepEqual(U.files({bridge_:{counter:2,timestamp:1},buoys_:{counter:12},discFedAidCor_:{counter:1}}).map(f=>f.url),[U.BASE+'bridge_1.geojson',U.BASE+'bridge_2.geojson']);
+const fs=require('node:fs'),p=require('node:path');const cache=p.join(__dirname,'../dist/nj/uscg-notices.json');
+if(fs.existsSync(cache)){const snapshot=JSON.parse(fs.readFileSync(cache));assert.equal(snapshot.schemaVersion,1);assert.ok(Number.isFinite(Date.parse(snapshot.retrievedAt)));assert.ok(snapshot.files.length>10);assert.equal(new Set(snapshot.notices.map(n=>n.id)).size,snapshot.notices.length);for(const n of snapshot.notices){assert.ok(n.title&&n.sourceUrl.startsWith(U.BASE));}}
+console.log('USCG notices: date overlap, cancelled records, geographic corridor, crossing lines, enclosing polygons, broad notices, deduplication and live-cache schema passed.');

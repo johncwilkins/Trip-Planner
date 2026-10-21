@@ -79,3 +79,7 @@ for(const reverse of [false,true]){
  const one=N.passage(onePassRoute,N.profile(mock,26),a,b,0,{},opts);assert.equal(one.bridgeDelayMinutes,15);assert.equal(one.bridges.filter(b=>b.coordinatedWith).length,0);
 }
 console.log('Albany/Dorset shared wait verified in both directions, including blank height and one closed pass.');
+
+require("./check-nj-bridge-schedules.cjs");
+
+require("./check-uscg-notices.cjs");
