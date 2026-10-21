@@ -18,3 +18,18 @@ assert.deepEqual(U.files({bridge_:{counter:2,timestamp:1},buoys_:{counter:12},di
 const fs=require('node:fs'),p=require('node:path');const cache=p.join(__dirname,'../dist/nj/uscg-notices.json');
 if(fs.existsSync(cache)){const snapshot=JSON.parse(fs.readFileSync(cache));assert.equal(snapshot.schemaVersion,1);assert.ok(Number.isFinite(Date.parse(snapshot.retrievedAt)));assert.ok(snapshot.files.length>10);assert.equal(new Set(snapshot.notices.map(n=>n.id)).size,snapshot.notices.length);for(const n of snapshot.notices){assert.ok(n.title&&n.sourceUrl.startsWith(U.BASE));}}
 console.log('USCG notices: date overlap, cancelled records, geographic corridor, crossing lines, enclosing polygons, broad notices, deduplication and live-cache schema passed.');
+const now=Date.parse('2026-10-21T12:00:00Z');
+const shoal={...n,title:'Shoaling',description:'Shoaling reported',category:'Hazard to navigation',begin:'2021-01-01',end:null,modified:'2026-10-21'};
+assert.equal(U.recentReason(shoal,now),null,'Metadata refresh must not resurface old shoaling');
+assert.ok(U.recentReason({...shoal,contentChangedAt:'2026-10-20'},now));
+assert.ok(U.recentReason({...shoal,begin:'2026-09-01'},now));
+assert.equal(U.recentReason({...shoal,begin:null,reported:null},now),null);
+assert.ok(U.recentReason({...n,category:'Federal aid discrepancy',description:'MISSING · Correction Status Unreported',modified:'2026-10-19',end:null},now));
+assert.equal(U.recentReason({...n,description:'Correction Status Unreported · Light List 123',modified:'2026-10-20'},now),null);
+assert.equal(U.recentReason({...n,category:'Proposed change',modified:'2026-10-20'},now),null);
+assert.ok(U.recentReason({...n,description:'Bridge will not open during construction',modified:'2025-01-01'},now));
+assert.equal(U.readable({...n,description:'STRUCT DMGD · Correction Status Unreported · Light List 123'}),'Damaged structure · Light List 123');
+assert.equal(U.trackChanges([{...shoal,modified:'2026-10-22'}],[shoal],'2026-10-22')[0].contentChangedAt,null);
+assert.equal(U.trackChanges([{...shoal,description:'New shoaling depth report'}],[shoal],'2026-10-22')[0].contentChangedAt,'2026-10-22');
+assert.equal(U.trackChanges([shoal],[],'2026-10-22')[0].contentChangedAt,null,'First import is not a new hazard');
+console.log('Notice relevance: old shoaling, timestamp-only edits, content changes, routine records and active bridge restrictions passed.');

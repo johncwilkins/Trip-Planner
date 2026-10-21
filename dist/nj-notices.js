@@ -3,7 +3,8 @@ const U=USCGNotices,$=id=>document.getElementById(id),escape=s=>String(s??'').re
 let refreshStatus=null,snapshot=null,context=null,layer=null,fetchError='',selectedId=null,filtered=[];
 const civil=t=>new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit'}).format(t);
 const stamp=t=>new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',month:'short',day:'numeric',year:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'}).format(new Date(t));
-function body(n){return `<h3>${escape(n.title)}</h3><p>${escape(n.category)} · ${escape(n.waterway)}</p><p><b>Effective:</b> ${escape(n.begin||'Start not supplied')} — ${escape(n.end||'No end date supplied')}</p><div class="noticeText">${escape(n.description)}</div><p><a href="${escape(n.sourceUrl)}" target="_blank" rel="noopener">Coast Guard source file</a> · <a href="${U.SOURCE}" target="_blank" rel="noopener">NAVCEN notice map</a></p><small>Snapshot retrieved ${escape(stamp(snapshot.retrievedAt))}. Read the full notice for daily work hours and conditions.</small>`;}
+function dates(n){return n.begin||n.end?[(n.begin?'From '+n.begin:''),(n.end?'Through '+n.end:'')].filter(Boolean).join(' · '):(n.modified?'Source updated '+n.modified:'Date not supplied');}
+function body(n){return `<h3>${escape(U.headline(n))}</h3><p>${escape(n.category)} · ${escape(n.waterway)}</p><p>${escape(dates(n))}</p><div class="noticeText">${escape(U.readable(n))}</div><details><summary>Original source wording</summary><div class="noticeText">${escape(n.description)}</div></details><p><a href="${escape(n.sourceUrl)}" target="_blank" rel="noopener">Coast Guard source file</a> · <a href="${U.SOURCE}" target="_blank" rel="noopener">NAVCEN notice map</a></p><small>Snapshot retrieved ${escape(stamp(snapshot.retrievedAt))}. Read the full notice for daily work hours and conditions.</small>`;}
 function inspect(id){const n=filtered.find(n=>n.id===id);if(!n)return;selectedId=id;$('noticeDetail').innerHTML=body(n);$('noticeDetail').hidden=false;}
 function render(){
  if(layer&&context?.map){context.map.removeLayer(layer);layer=null;}
@@ -14,10 +15,12 @@ function render(){
  $('noticeStatus').className=stale||fetchError||snapshot.complete===false||refreshFailed?'lowWaterNotice lowWaterWarning':'formHint';
  if(!context)return;
  const start=civil(context.departure),end=civil(context.end);
- filtered=snapshot.notices.filter(n=>U.active(n,start,end)&&U.nearRoute(n.geometry,context.coordinates,2));
+ const all=$('noticeScope').value==='all',corridor=Number($('noticeCorridor').value);
+ const matching=snapshot.notices.filter(n=>U.active(n,start,end)&&U.nearRoute(n.geometry,context.coordinates,corridor));
+ filtered=matching.filter(n=>all||U.recentReason(n)).sort((a,b)=>(b.contentChangedAt||b.modified||b.begin||'').localeCompare(a.contentChangedAt||a.modified||a.begin||''));
  const broad=filtered.filter(n=>!n.geometry);
- $('noticeSummary').textContent=`${filtered.length} notices in this snapshot match ${start}${end!==start?'–'+end:''} and the selected passage (within 2 nm, or overlapping an area). ${broad.length} have no precise location. This is a filtered snapshot, not confirmation that the route is clear.`;
- $('noticeList').innerHTML=filtered.map(n=>`<button type="button" class="noticeListItem" data-notice="${escape(n.id)}"><b>${escape(n.title)}</b><small>${escape(n.category)} · ${escape(n.begin||'Start unknown')} — ${escape(n.end||'End unknown')}${!n.geometry?' · Broader District 5 notice, location unspecified':''}</small></button>`).join('')||'<p>No matching notices found in this snapshot. Check NAVCEN for updates and notices outside these geographic files.</p>';
+ $('noticeSummary').textContent=`${filtered.length} notices in this snapshot match ${start}${end!==start?'–'+end:''} and the selected passage (within ${corridor} nm, or overlapping an area). ${matching.length-filtered.length} older or routine notices hidden. ${broad.length} have no precise location. This is a filtered snapshot, not confirmation that the route is clear.`;
+ $('noticeList').innerHTML=filtered.map(n=>`<button type="button" class="noticeListItem" data-notice="${escape(n.id)}"><b>${escape(U.headline(n))}</b><small>${escape(n.category)} · ${escape(dates(n))} · ${escape(U.recentReason(n)||'Older or routine notice')}${!n.geometry?' · Broader District 5 notice, location unspecified':''}</small></button>`).join('')||'<p>No matching notices found in this snapshot. Check NAVCEN for updates and notices outside these geographic files.</p>';
  $('noticeList').querySelectorAll('[data-notice]').forEach(b=>b.onclick=()=>inspect(b.dataset.notice));
  if(selectedId&&filtered.some(n=>n.id===selectedId))inspect(selectedId);else{$('noticeDetail').hidden=true;selectedId=null;}
  if(!$('showNotices').checked||!context.map)return;
@@ -42,7 +45,7 @@ async function load(){
 }
 window.addEventListener('nj-trip-updated',e=>{context=e.detail;render();});
 window.addEventListener('nj-trip-cleared',()=>{if(layer&&context?.map)context.map.removeLayer(layer);layer=null;context=null;filtered=[];$('noticeList').textContent='Choose a valid passage to match notices.';$('noticeDetail').hidden=true;});
-$('showNotices').onchange=render;$('loadNotices').onclick=load;
+$('noticeScope').onchange=render;$('noticeCorridor').onchange=render;$('showNotices').onchange=render;$('loadNotices').onclick=load;
 $('refreshNotices').onclick=()=>{$('noticeRefreshHint').textContent='On GitHub, click Run workflow with Notices only enabled. When the job finishes, click Load latest snapshot here. Repository-owner sign-in is required to start the job.';};
 try{const saved=JSON.parse(localStorage.getItem('nj-uscg-snapshot-v1')||'null');if(saved?.schemaVersion===1&&Array.isArray(saved.notices)&&Number.isFinite(Date.parse(saved.retrievedAt)))snapshot=saved;}catch(e){}
 load();

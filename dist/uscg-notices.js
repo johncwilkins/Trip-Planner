@@ -12,7 +12,7 @@ function normalize(f,file){
  const title=String(p.TITLE||p.NAME||p.AID_NAME||kind),extra=[p.DISCREP_STATUS,p.TC_STATUS,p.DISCREP_CORR_STATUS,p.BNM_NUM?'BNM '+p.BNM_NUM:null,p.LLNR?'Light List '+p.LLNR:null].filter(Boolean).join(' · ');
  let geometry=g;
  if(!positions(geometry).length){const lon=Number(p.DECIMAL_LONGITUDE),lat=Number(p.DECIMAL_LATITUDE);geometry=p.DECIMAL_LONGITUDE!=null&&p.DECIMAL_LATITUDE!=null&&Number.isFinite(lon)&&Number.isFinite(lat)&&Math.abs(lon)<=180&&Math.abs(lat)<=90?{type:'Point',coordinates:[lon,lat]}:null;}
- return {id:(p.MSI_UID!=null?'msi-':'lnm-')+uid,title,category:kind,description:String(p.DESCRIPTION||extra||'See the Coast Guard source for details.'),waterway:String(p.WATERWAY_NAME||''),begin:date(p.BEGIN_DATE),end:date(p.END_DATE),modified:date(p.MODIFIED_DATE||p.CREATE_DATE),district:p.ATU,geometry,sourceUrl:file.url,sourceUpdatedAt:file.sourceUpdatedAt,officialUrl:SOURCE};
+ return {id:(p.MSI_UID!=null?'msi-':'lnm-')+uid,title,category:kind,description:String(p.DESCRIPTION||extra||'See the Coast Guard source for details.'),waterway:String(p.WATERWAY_NAME||''),begin:date(p.BEGIN_DATE),end:date(p.END_DATE),reported:date(p.CREATE_DATE),modified:date(p.MODIFIED_DATE||p.CREATE_DATE),district:p.ATU,geometry,sourceUrl:file.url,sourceUpdatedAt:file.sourceUpdatedAt,officialUrl:SOURCE};
 }
 function inRegion(n,bounds){const pp=positions(n.geometry);return pp.length?Math.min(...pp.map(p=>p[0]))<=bounds.east&&Math.max(...pp.map(p=>p[0]))>=bounds.west&&Math.min(...pp.map(p=>p[1]))<=bounds.north&&Math.max(...pp.map(p=>p[1]))>=bounds.south:Number(n.district)===5;}
 function merge(notices){const out=new Map();for(const n of notices){if(!n)continue;const old=out.get(n.id);if(!old)out.set(n.id,n);else if(n.geometry&&JSON.stringify(old.geometry)!==JSON.stringify(n.geometry)){old.geometry={type:'GeometryCollection',geometries:[...(old.geometry?.type==='GeometryCollection'?old.geometry.geometries:old.geometry?[old.geometry]:[]),n.geometry]};}}return [...out.values()];}
@@ -36,5 +36,28 @@ function nearRoute(geometry,route,corridorNm=2){
  for(const line of lines){const q=line.map(xy);for(let i=0;i<track.length;i++){if(q.some(p=>pointSegment(p,track[i],track[Math.min(i+1,track.length-1)])<=corridorNm))return true;for(let j=1;j<q.length;j++){const a=track[i],b=track[Math.min(i+1,track.length-1)],c=q[j-1],d=q[j];if(intersects(a,b,c,d)||Math.min(pointSegment(a,c,d),pointSegment(b,c,d))<=corridorNm)return true;}}}
  return false;
 }
-root.USCGNotices={BASE,SOURCE,files,normalize,inRegion,merge,active,nearRoute,positions};if(typeof module!=='undefined')module.exports=root.USCGNotices;
+// A timestamp-only source edit does not make longstanding shoaling recent.
+function contentKey(n){return JSON.stringify([n.title,n.category,n.description,n.waterway,n.begin,n.end,n.geometry]);}
+function trackChanges(notices,previous,now){const old=new Map(previous.map(n=>[n.id,n]));return notices.map(n=>{const p=old.get(n.id);return {...n,contentChangedAt:p?(contentKey(n)!==contentKey(p)?now:p.contentChangedAt||null):null};});}
+function readable(n){
+ const codes={'STRUCT DEST':'Destroyed structure','STRUCT DMGD':'Damaged structure','DBD DEST':'Destroyed dayboard','DBD DMGD':'Damaged dayboard','DAYMK DMGD':'Damaged daymark','LT EXT':'Light extinguished','LT IMCH':'Improper light characteristic','OFF STATION':'Off station','HAZ NAV':'Navigation hazard','TRLB':'Temporary lighted buoy','MISSING':'Missing'};
+ let text=n.description.replace(/(?: · )?Correction Status Unreported/gi,'').trim();
+ for(const [code,label] of Object.entries(codes))text=text.replaceAll(code,label);
+ return text;
+}
+function headline(n){return n.description.match(/(?:Bridge Name|Aid Name):\s*([^\n]+)/i)?.[1]?.trim()||(n.title.includes('/')?n.title.split('/').at(-1)+' · '+(n.waterway||n.title.split('/')[0]):n.title);}
+function recentReason(n,now=Date.now(),days=90){
+ const text=n.title+' '+n.description,shoaling=/shoal/i.test(text);
+ const cutoff=new Date(now-days*86400000).toISOString().slice(0,10),today=new Date(now).toISOString().slice(0,10);
+ const recent=d=>d&&d.slice(0,10)>=cutoff&&d.slice(0,10)<=today;
+ const dated=shoaling?(n.begin||n.reported):(n.modified||n.reported||n.begin);
+ if(/Advance change notice|Proposed change/.test(n.category)||/WAMS|Waterways Analysis|PERMIT APPLICATION PROCESS/i.test(text))return null;
+ if(!readable(n).replace(/Light List \S+|See the Coast Guard source for details\.|[ ·/]/g,'').trim())return null;
+ if(recent(n.contentChangedAt))return 'Notice content changed recently';
+ if(recent(dated))return shoaling?'Recently reported shoaling':'Reported or updated within '+days+' days';
+ // Keep explicit bridge restrictions that are still in force even when old.
+ if(n.category==='Bridge notice'&&/clos(?:ed|ure)|will not open|unable to open|restricted|restriction|clearance.*reduc/i.test(text))return 'Existing bridge restriction';
+ return null;
+}
+root.USCGNotices={contentKey,trackChanges,readable,headline,recentReason,BASE,SOURCE,files,normalize,inRegion,merge,active,nearRoute,positions};if(typeof module!=='undefined')module.exports=root.USCGNotices;
 })(globalThis);
