@@ -83,13 +83,13 @@ function passage(route,profile,start,finish,departure,bridgeDelays={},clearanceO
   if(scheduled&&movable&&b.status!=='closed-pass'){
    b.schedule=bridgeSchedule(b.key,b.arrival,{noticeArranged:!!clearanceOptions.bridgeNotices?.[b.key]});
    b.scheduleReview=!!b.schedule.review;
-   if(!b.scheduleReview)b.delayMinutes=b.schedule.delayMinutes;
+   if(!b.scheduleReview)b.delayMinutes=b.schedule.delayMinutes>0?Math.max(0,(b.schedule.opening-b.arrival)/60000):0;
   }
   if(clearanceOptions.bridgeModes?.albany!=='schedule'&&clearanceOptions.bridgeModes?.dorset!=='schedule'&&clearanceOptions.coordinateAlbanyDorset&&['albany','dorset'].includes(b.key)&&b.status==='open'){
    if(firstPairOpening){b.coordinatedWith=firstPairOpening.name;b.pairTransitMinutes=Math.abs(secondsAt(route,profile,b.distance)-secondsAt(route,profile,firstPairOpening.distance))/60;b.delayMinutes=0;}
    else firstPairOpening=b;
   }
-  bridgeDelayMinutes+=b.delayMinutes;b.clear=b.arrival+b.delayMinutes*60000;
+  bridgeDelayMinutes+=b.delayMinutes;b.clear=b.schedule&&!b.scheduleReview&&b.delayMinutes>0?b.schedule.opening:b.arrival+b.delayMinutes*60000;
  }
  const eta=s=>departure+Math.abs(secondsAt(route,profile,s)-sa)*1000+bridges.filter(b=>b.progress<progress(s)-1e-7).reduce((sum,b)=>sum+b.delayMinutes*60000,0);
  const movingHours=Math.abs(sb-sa)/3600;

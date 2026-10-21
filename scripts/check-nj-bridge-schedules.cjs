@@ -58,3 +58,8 @@ for(const reverse of [false,true]){
  const mixed=N.passage(route,profile,start,finish,departure,{albany:8,dorset:9},{...opts,bridgeModes:{albany:'schedule',dorset:'manual'}});assert.ok(mixed.bridges.every(b=>!b.coordinatedWith));
 }
 console.log('Bridge schedules: seasonal dates, exact/just-missed openings, closures, notice periods, DST, event review and sequential waits in both directions passed.');
+
+// Recorded-route arrivals retain fractional milliseconds. Clear time must stay
+// exactly on the opening instant, rather than format as the previous minute.
+const fractional=N.passage(route,profile,{distance:0},{distance:2},at('2027-07-12','10:22')+30000.123,{},opts);
+for(const b of fractional.bridges){assert.equal(b.clear,b.schedule.opening);assert.ok(Math.abs(b.clear-b.arrival-b.delayMinutes*60000)<.001);}
