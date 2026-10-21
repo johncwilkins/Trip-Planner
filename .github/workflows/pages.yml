@@ -18,7 +18,41 @@ concurrency:
   group: trip-planner-pages
   cancel-in-progress: false
 jobs:
+  coast_guard:
+    if: github.event_name != 'push'
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Import pending source bundle
+        run: |
+          if [ -f trip-planner-source.zip ]; then
+            python - <<'PYCODE'
+          import pathlib,zipfile
+          root=pathlib.Path.cwd()
+          with zipfile.ZipFile('trip-planner-source.zip') as z:
+              for entry in z.infolist():
+                  target=(root/entry.filename).resolve()
+                  if not target.is_relative_to(root) or entry.filename.startswith(('.git/','.github/','.openai/')):
+                      raise ValueError('Unexpected path in source bundle')
+              z.extractall(root)
+          PYCODE
+          fi
+      - name: Fetch Coast Guard geographic notices
+        continue-on-error: true
+        run: python scripts/refresh-uscg-notices.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coast-guard-notices
+          path: |
+            dist/nj/uscg-notices.json
+            dist/nj/uscg-refresh-status.json
+          if-no-files-found: error
   prepare:
+    needs: [coast_guard]
+    if: always() && !cancelled()
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -51,16 +85,12 @@ jobs:
           with open(os.environ['GITHUB_OUTPUT'],'a') as f:
               f.write('run='+str(refresh).lower()+'\n')
           PY
-      - name: Refresh Coast Guard notices
-        if: steps.refresh.outputs.run == 'true' || (github.event_name == 'workflow_dispatch' && inputs.notices_only) || !hashFiles('dist/nj/uscg-notices.json')
-        run: |
-          if ! python scripts/refresh-uscg-notices.py; then
-            if [ -f dist/nj/uscg-notices.json ]; then
-              echo '::warning::Coast Guard refresh failed; retaining the prior timestamped snapshot.'
-            else
-              exit 1
-            fi
-          fi
+      - name: Use refreshed Coast Guard snapshot
+        if: needs.coast_guard.result == 'success'
+        uses: actions/download-artifact@v4
+        with:
+          name: coast-guard-notices
+          path: dist/nj
       - name: Refresh saved weekly current and tide predictions
         if: steps.refresh.outputs.run == 'true'
         run: python scripts/refresh-weekly.py
