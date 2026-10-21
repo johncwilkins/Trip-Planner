@@ -137,6 +137,7 @@ jobs:
         with:
           path: dist
   deploy:
+    if: always() && !cancelled() && needs.prepare.result == 'success'
     needs: prepare
     runs-on: ubuntu-latest
     environment:
