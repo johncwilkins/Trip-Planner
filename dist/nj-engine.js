@@ -14,10 +14,11 @@ function addCheckpoints(route,definitions){
  }
  route.stations.sort((a,b)=>a.distance-b.distance);return route;
 }
-function profile(route,cruise){if(!Number.isFinite(cruise)||cruise<1||cruise>50)throw Error('Cruise speed must be between 1 and 50 knots.');let seconds=[0];for(let i=1;i<route.points.length;i++){let a=route.points[i-1],b=route.points[i],cap=a[4]??b[4],dt=b[2]-a[2];let factor=cap==null?route.referenceCruiseKnots/cruise:Math.max(1,cap/cruise);seconds.push(seconds[i-1]+dt*factor);}seconds.cruiseKnots=cruise;return seconds;}
+function cruiseOverride(route,s){return (route.timingOverrides||[]).some(o=>o.mode==='cruise'&&s>o.startNm&&s<o.endNm);}
+function profile(route,cruise){if(!Number.isFinite(cruise)||cruise<1||cruise>50)throw Error('Cruise speed must be between 1 and 50 knots.');let seconds=[0];for(let i=1;i<route.points.length;i++){let a=route.points[i-1],b=route.points[i],cap=a[4]??b[4],dt=b[2]-a[2];let factor=cap==null?route.referenceCruiseKnots/cruise:Math.max(1,cap/cruise);seconds.push(seconds[i-1]+(cruiseOverride(route,(a[3]+b[3])/2)?(b[3]-a[3])/cruise*3600:dt*factor));}seconds.cruiseKnots=cruise;return seconds;}
 function bracket(points,s,column=3){let lo=0,hi=points.length-1;if(s<=points[0][column])return[0,0,0];if(s>=points[hi][column])return[hi,hi,0];while(hi-lo>1){let m=(hi+lo)>>1;if(points[m][column]<=s)lo=m;else hi=m;}let span=points[hi][column]-points[lo][column];return[lo,hi,span?(s-points[lo][column])/span:0];}
 function secondsAt(route,profile,s){let[a,b,f]=bracket(route.points,s);return profile[a]+f*(profile[b]-profile[a]);}
-function position(route,s){let[a,b,f]=bracket(route.points,s);return {lat:route.points[a][0]+f*(route.points[b][0]-route.points[a][0]),lon:route.points[a][1]+f*(route.points[b][1]-route.points[a][1]),cap:route.points[a][4]??route.points[b][4]};}
+function position(route,s){let[a,b,f]=bracket(route.points,s);return {lat:route.points[a][0]+f*(route.points[b][0]-route.points[a][0]),lon:route.points[a][1]+f*(route.points[b][1]-route.points[a][1]),cap:cruiseOverride(route,s)?null:route.points[a][4]??route.points[b][4]};}
 function bridgeClearance(bridge,arrival,options={}){
  const height=options.boatHeightFt,margin=options.marginFt??2;
  if(height==null)return {status:'height-needed',needsOpening:null,clearanceFt:null,tideFt:null,maxTideFt:null,remainingFt:null};

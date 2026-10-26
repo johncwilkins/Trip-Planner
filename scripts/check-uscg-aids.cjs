@@ -20,3 +20,11 @@ const f={key:'discFedAidCor_',url:U.BASE+'discFedAidCor_1.geojson'};
 const normalized=U.normalize({properties:{LNM_UID:5,NAME:'Buoy',DISCREP_STATUS:'MISSING',DISCREP_CORR_STATUS:'N/A',CREATE_DATE:1792416611000},geometry:null},f);
 assert.equal(A.info(normalized).status,'restored');assert.equal(normalized.aidSource.DISCREP_STATUS,'MISSING');
 console.log('Aid discrepancies: source codes, physical vs dayboard damage, uncertain/negative/restored statuses, dates, grouped report provenance and position roles passed.');
+// A temporary substitute changes default visibility, never correction status.
+for(const code of ['MISSING/TRLB','STRUCT DEST/HAZ NAV/TRLB','STRUCT DMGD/TRUB']){
+ const n=aid(code);assert.equal(A.visible(n),false);assert.equal(A.visible(n,{includeReplacements:true}),true);assert.equal(A.info(n).status,'uncertain');
+}
+for(const code of ['MISSING','STRUCT DEST','STRUCT DEST/TRLB/OFF STATION','MISSING/TRLB/LT EXT','TRLB/UNKNOWN','SINKING/TRUB'])assert.equal(A.visible(aid(code)),true);
+const conflicting=A.group([aid('STRUCT DEST/TRLB'),{...aid('OFF STATION'),id:'another-report'}])[0];assert.equal(A.visible(conflicting),true,'Do not hide another report for the same aid');
+assert.equal(A.visible(aid('MISSING/TRLB','Restored'),{includeReplacements:true}),false);
+console.log('Temporary replacements: explicit codes, additional hazards, grouped reports, opt-in visibility and unchanged statuses passed.');
