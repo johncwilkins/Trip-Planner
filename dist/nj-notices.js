@@ -41,7 +41,7 @@ function render(){
  }
 }
 async function load(){
- $('loadNotices').disabled=true;$('noticeStatus').textContent='Loading the latest published notice snapshot…';
+ $('noticeStatus').textContent='Loading the latest published notice snapshot…';
  try{
   const [response,statusResponse]=await Promise.all([fetch('nj/uscg-notices.json?v='+Date.now(),{cache:'no-store'}),fetch('nj/uscg-refresh-status.json?v='+Date.now(),{cache:'no-store'})]);
   if(statusResponse.ok)refreshStatus=await statusResponse.json();if(!response.ok)throw Error('Published notice snapshot unavailable.');
@@ -49,13 +49,14 @@ async function load(){
   if(!snapshot||Date.parse(next.retrievedAt)>=Date.parse(snapshot.retrievedAt))snapshot=next;
   fetchError='';try{localStorage.setItem('nj-uscg-snapshot-v1',JSON.stringify(snapshot));}catch(e){}
  }catch(e){fetchError='Refresh failed; '+(snapshot?'retaining the last successful snapshot.':'no notice data available.');}
- finally{$('loadNotices').disabled=false;render();}
+ finally{render();}
 }
 window.addEventListener('nj-trip-updated',e=>{context=e.detail;render();});
 window.addEventListener('nj-trip-cleared',()=>{if(layer&&context?.map)context.map.removeLayer(layer);layer=null;context=null;filtered=[];$('noticeList').textContent='Choose a valid passage to match notices.';$('noticeDetail').hidden=true;});
 for(const id of ['aidPhysical','aidVisibility','aidOther','aidRestored','aidReplacements','otherNotices'])$(id).onchange=render;
-$('noticeScope').onchange=render;$('noticeCorridor').onchange=render;$('showNotices').onchange=render;$('loadNotices').onclick=load;
-$('refreshNotices').onclick=()=>{$('noticeRefreshHint').textContent='On GitHub, click Run workflow with Notices only enabled. When the job finishes, click Load latest snapshot here. Repository-owner sign-in is required to start the job.';};
+$('noticeScope').onchange=render;$('noticeCorridor').onchange=render;$('showNotices').onchange=render;
 try{const saved=JSON.parse(localStorage.getItem('nj-uscg-snapshot-v1')||'null');if(saved?.schemaVersion===1&&Array.isArray(saved.notices)&&Number.isFinite(Date.parse(saved.retrievedAt)))snapshot=saved;}catch(e){}
 load();
+setInterval(()=>{if(!document.hidden)load();},30*60*1000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)load();});
 })();
