@@ -24,7 +24,7 @@ async function update(){
   const forecasts=await PassageWeather.collect(points);
   if(n!==request||trip!==selected||route!==selectedRoute)return;
   const format=t=>new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',month:'short',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'}).format(t);
-  window.njTripWeatherSummary=PassageWeather.summary(forecasts,format);box.textContent=window.njTripWeatherSummary;
+  window.njTripWeatherSummary=PassageWeather.summary(forecasts,format);box.textContent=PassageWeather.summary(forecasts,format,{compact:true});
  }catch(error){if(n!==request||trip!==selected)return;box.textContent='Weather and sea forecasts unavailable for this passage. Check full forecasts.';}
  if(n===request)window.dispatchEvent(new Event('nj-weather-updated'));
  await zonesReady;

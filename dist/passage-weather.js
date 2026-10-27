@@ -40,7 +40,7 @@
  }
  const value=(row,kind,key)=>row[kind]?.h[key]?.[row[kind].ix];
  const location=x=>`near ${x.name} (${Math.abs(x.lat).toFixed(3)}° ${x.lat<0?'S':'N'}, ${Math.abs(x.lon).toFixed(3)}° ${x.lon<0?'W':'E'})`;
- function summary(all,fmt){
+ function summary(all,fmt,{compact=false}={}){
   const available=all.filter(row=>Number.isFinite(value(row,'air','weather_code'))&&Number.isFinite(value(row,'air','wind_speed_10m')));
   const range=(key,unit)=>{const values=all.map(row=>value(row,'air',key)).filter(Number.isFinite);if(!values.length)return 'unavailable';const lo=Math.round(Math.min(...values)),hi=Math.round(Math.max(...values));return (lo===hi?String(lo):lo+'–'+hi)+unit;};
   const general=available.length?'Expected along the trip: temperature '+range('temperature_2m','°F')+' · wind '+range('wind_speed_10m',' kt')+' · gusts '+range('wind_gusts_10m',' kt')+' · precipitation chance '+range('precipitation_probability','%')+'.':'Weather forecast unavailable for the passage dates or locations.';
@@ -59,6 +59,10 @@
   const largest=max?`Largest forecast seas among route samples: ${value(max,'sea','wave_height').toFixed(1)} ft ${location(max.x)} around ${fmt(max.x.t)} (significant wave height; individual waves can be higher).`:marineCount?'Largest forecast seas: unavailable for the passage dates or locations.':'Largest forecast seas: unavailable for inside waters; bay and canal waves are not modeled by this offshore forecast.';
   const coverage=`Forecast coverage: ${available.length}/${all.length} weather route samples; marine wave data ${seas.length}/${marineCount} offshore route samples.`;
   const partial=available.length<all.length||seas.length<marineCount?' Coverage is incomplete; higher seas or other conditions may occur in uncovered sections.':'';
+  if(compact){
+   const seasText=max?`Largest forecast seas: ${value(max,'sea','wave_height').toFixed(1)} ft near ${max.x.name} around ${fmt(max.x.t)}. Individual waves may be higher.`:marineCount?'Sea forecast unavailable.':'Inside-water wave heights unavailable.';
+   return [general,seasText,...(partial?['Some forecast coverage is missing.']:[])].join(' ');
+  }
   return [general,largest,...notes,coverage+partial,'Open-Meteo hourly weather and marine forecasts at estimated passage times; conditions between samples may differ.'].join(' ');
  }
  root.PassageWeather={samples,hourly,collect,summary};if(typeof module!=='undefined')module.exports=root.PassageWeather;
