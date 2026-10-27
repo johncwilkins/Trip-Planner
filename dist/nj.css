@@ -47,3 +47,14 @@ header{position:relative;background:white;color:#143345;border-bottom:0;padding-
 
 .bridgeControl.bridgeInactive, .bridgeControl.bridgeInactive label, .bridgeControl.bridgeInactive small { color: #77838a; }
 .bridgeControl[hidden] { display: none; }
+
+/* Keep boat speed visible before the optional passage controls. */
+.controls .boatSpeedIntro{font-size:13px;line-height:1.45;padding:9px 11px;background:#e7f5f0;border-left:4px solid #087c72;border-radius:4px}
+.controls .boatSetup{margin:0;padding:12px;border:2px solid #529c8f;border-radius:7px;background:#f4faf8;min-width:0}
+.boatSetup>legend,.boatSetup>summary{font-size:14px;font-weight:750;color:#0b5148}
+.boatSetup>summary{display:list-item;cursor:pointer;line-height:1.45}
+.boatSetup>summary::marker{color:#087c72}
+.boatSetup>summary:focus-visible{outline:3px solid #009b88;outline-offset:4px}
+.boatSetup .boatControls{border:0;margin:12px 0 0;padding:0;background:transparent}
+.boatSetup .boatControls>legend{font-size:13px;margin-bottom:6px}
+.boatSetup #boatSpeedHint{font-size:13px;line-height:1.45;margin:6px 0 10px!important}
