@@ -20,26 +20,36 @@ const base=process.env.PLANNER_TEST_URL||'http://127.0.0.1:8000';
    }
    return route.fulfill({json:{hourly:{time,...(marine?{wave_height:wave}:{temperature_2m:temperature,weather_code:codes,wind_speed_10m:wind,wind_gusts_10m:gust,precipitation_probability:rain,wind_direction_10m:time.map(()=>90)})}}});
   });
+  if(planner==='nj')await page.addInitScript(width=>{localStorage.setItem('nj-passage-settings-v1',JSON.stringify({routeMode:'barnegat',start:width===390?'cape-may':'barnegat-approach',finish:width===390?'barnegat-approach':'cape-may',cruise:'16'}));},width);
   await page.goto(base+'/'+planner+'.html');
-  const selector=planner==='currents'?'#currentWeather':'#marineForecast';
+  const selector=planner==='currents'?'#currentWeather':'#briefing';
   await page.waitForFunction(selector=>document.querySelector(selector)?.textContent.includes('Forecast coverage:'),selector);
   let text=await page.locator(selector).textContent();
   assert.match(text,/Expected along the trip: temperature/);assert.match(text,/wind .*gusts .*precipitation chance/);assert.doesNotMatch(text,/midpoint|NaN|Infinity/);
   assert.ok(new Set(requests.filter(u=>u.hostname==='api.open-meteo.com').map(u=>u.searchParams.get('latitude')+','+u.searchParams.get('longitude'))).size>2,'weather sampled across route');
   if(planner==='nj'){
+   assert.equal(await page.locator('#routeMode').inputValue(),'inside','ignore saved ocean route on startup');
+   assert.equal(await page.evaluate(()=>route.routeKey),'inside');assert.equal(await page.locator('#cruise').inputValue(),'16','restore boat speed');
+   assert.notEqual(await page.locator('#start').inputValue(),await page.locator('#finish').inputValue(),'saved ocean endpoints cannot invalidate inside passage');
+   const compact=await page.locator('#marineForecast').textContent();assert.doesNotMatch(compact,/Forecast coverage:|route samples|marine wave data|Open-Meteo hourly/);assert.match(compact,/Expected along the trip/);
+   const forecastLink=page.locator('a[href="https://marine.weather.gov/MapClick.php?zoneid=ANZ453"]');assert.equal(await forecastLink.textContent(),'Full NWS marine forecast');assert.equal(await forecastLink.locator('..').textContent(),'Full NWS marine forecast');
    assert.match(text,/inside waters/);assert.ok(!requests.some(u=>u.hostname==='marine-api.open-meteo.com'),'no ocean waves substituted for bay/canal conditions');
    // Select an ocean route and endpoints that actually include its offshore leg.
    await page.evaluate(async()=>{document.getElementById('routeMode').value='barnegat';prepareRoute();document.getElementById('start').value='barnegat-approach';document.getElementById('finish').value='cape-may';await calculate({preserveView:true});});
-   await page.waitForFunction(()=>document.getElementById('marineForecast').textContent.includes('Largest forecast seas among route samples:'));
+   await page.waitForFunction(()=>document.getElementById('briefing').textContent.includes('Largest forecast seas among route samples:'));
    text=await page.locator(selector).textContent();assert.match(text,/ft near .*around .*E[DS]T/);assert.match(text,/significant wave height/);
-   assert.ok(await page.locator('#briefing').textContent().then(t=>t.includes(text)),'tide briefing includes whole-route weather');
+   assert.ok(await page.locator('#briefing').textContent().then(t=>t.includes('Forecast coverage:')),'keep full forecast details in briefing');assert.match(await page.locator('#marineForecast').textContent(),/Largest forecast seas:/);
    // Reverse the trip; changing ETAs must refresh weather automatically.
    const firstText=text;await page.locator('#swap').click();
-   await page.waitForFunction(()=>!calculating&&document.getElementById('marineForecast').textContent.includes('Forecast coverage:'));
+   await page.waitForFunction(()=>!calculating&&document.getElementById('briefing').textContent.includes('Forecast coverage:'));
    assert.notEqual(await page.locator(selector).textContent(),firstText);
    // Remove marine service while retaining real air coverage.
    failSea=true;await page.evaluate(()=>location.reload());
-   await page.waitForFunction(()=>document.getElementById('marineForecast').textContent.includes('Largest forecast seas: unavailable for the passage'));
+   await page.waitForFunction(()=>!calculating&&document.getElementById('briefing').textContent.includes('Forecast coverage:'));
+   assert.equal(await page.locator('#routeMode').inputValue(),'inside','reload resets route to inside');
+   await page.evaluate(async()=>{document.getElementById('routeMode').value='barnegat';prepareRoute();document.getElementById('start').value='barnegat-approach';document.getElementById('finish').value='cape-may';await calculate({preserveView:true});});
+   await page.waitForFunction(()=>document.getElementById('briefing').textContent.includes('Largest forecast seas: unavailable for the passage'));
+   assert.match(await page.locator('#marineForecast').textContent(),/Some forecast coverage is missing/);
    assert.match(await page.locator(selector).textContent(),/Expected along the trip/);
   }else{
    assert.match(text,/Largest forecast seas among route samples: .*ft near .*around .*E[DS]T/);

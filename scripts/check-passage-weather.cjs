@@ -16,6 +16,7 @@ function row(name,wave,air=true){return {x:{name,lat:39,lon:-74,t:start,marine:t
 const all=[row('departure',1),row('offshore',5,false),row('arrival',2)];
 let text=W.summary(all,t=>new Date(t).toISOString());
 assert.match(text,/Largest forecast seas among route samples: 5.0 ft near offshore/);assert.match(text,/marine wave data 3\/3/);assert.match(text,/Coverage is incomplete/);assert.match(text,/temperature 60°F/);
+const compact=W.summary(all,t=>new Date(t).toISOString(),{compact:true});assert.match(compact,/Largest forecast seas: 5.0 ft near offshore/);assert.match(compact,/Some forecast coverage is missing/);assert.doesNotMatch(compact,/Forecast coverage:|route samples|marine wave data|Open-Meteo hourly/);
 text=W.summary([row('calm',0)],String);assert.match(text,/0.0 ft/);assert.match(text,/precipitation chance 0%/);assert.doesNotMatch(text,/incomplete/);
 text=W.summary([row('missing',null,false)],String);assert.match(text,/Largest forecast seas: unavailable/);assert.doesNotMatch(text,/null|NaN|Infinity|0.0 ft/);
 const inside=row('inside',null);inside.x.marine=false;text=W.summary([inside],String);assert.match(text,/inside waters/);assert.match(text,/0\/0 offshore/);
