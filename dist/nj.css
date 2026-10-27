@@ -44,3 +44,6 @@ header{position:relative;background:white;color:#143345;border-bottom:0;padding-
 #marineForecast{line-height:1.35;overflow-wrap:anywhere}
 
 .bridgeOptions{border:1px solid #c4d5df;border-radius:6px;padding:10px}.bridgeOptions>summary{cursor:pointer;font-weight:700}.bridgeOptions .bridgeControls{margin-top:10px}
+
+.bridgeControl.bridgeInactive, .bridgeControl.bridgeInactive label, .bridgeControl.bridgeInactive small { color: #77838a; }
+.bridgeControl[hidden] { display: none; }
