@@ -1,0 +1,13 @@
+.plannerMapPreview{position:fixed;bottom:max(12px,env(safe-area-inset-bottom));width:250px;height:190px;max-width:calc(100vw - 24px);max-height:35dvh;z-index:1100;border:2px solid #123e55;border-radius:10px;overflow:hidden;background:#acd9ef;box-shadow:0 4px 22px #123e5550}
+.plannerMapPreview[hidden]{display:none}
+.plannerMapPreview #map{width:100%;height:100%;pointer-events:none}
+.plannerMapPreview .leaflet-control-zoom{display:none}
+.plannerMapPreview .leaflet-control-attribution{font-size:9px}
+.plannerMapReturn{padding-bottom:22px!important}
+.plannerMapReturn{position:absolute;inset:0;z-index:1200;background:transparent!important;border-radius:0;color:#123e55;display:flex;align-items:end;justify-content:center;padding:8px;text-shadow:0 0 4px white,0 0 4px white}
+.plannerMapClose{position:absolute;right:0;top:0;z-index:1201;min-width:36px;min-height:36px;padding:4px;font-size:22px}
+.plannerLocationPulse{pointer-events:none}
+.plannerLocationPulse span{display:block;width:36px;height:36px;border:3px solid #e03f14;border-radius:50%;box-shadow:0 0 0 2px white;animation:plannerPulse .8s ease-out 3}
+@keyframes plannerPulse{from{transform:scale(.45);opacity:1}to{transform:scale(1.6);opacity:0}}
+@media(max-width:650px){.plannerMapPreview{width:200px;height:150px}.plannerMapReturn{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.plannerLocationPulse span{animation:none}}
