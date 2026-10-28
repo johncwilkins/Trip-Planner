@@ -51,6 +51,15 @@ const base=process.env.PLANNER_TEST_URL||'http://127.0.0.1:8000';
    await page.waitForFunction(()=>document.getElementById('briefing').textContent.includes('Largest forecast seas: unavailable for the passage'));
    assert.match(await page.locator('#marineForecast').textContent(),/Some forecast coverage is missing/);
    assert.match(await page.locator(selector).textContent(),/Expected along the trip/);
+   // The bounded bypass keeps the northern inside leg and Atlantic City connection.
+   failSea=false;
+   await page.evaluate(async()=>{document.getElementById('routeMode').value='barnegat-absecon';prepareRoute();document.getElementById('start').value='manasquan';document.getElementById('finish').value='atlantic-city';await calculate({preserveView:true});map.setView(map.getCenter(),9,{animate:false});map.setBearing(45);});
+   await page.waitForFunction(()=>document.getElementById('briefing').textContent.includes('Largest forecast seas among route samples:'));
+   const bypass=await page.evaluate(()=>({key:route.routeKey,start:trip.start.key,finish:trip.finish.key,bridges:trip.bridges.map(b=>b.key),colors:Object.values(routeLayer._layers).map(l=>l.options.color),text:document.getElementById('briefing').textContent}));
+   assert.equal(bypass.key,'barnegat-absecon');assert.equal(bypass.start,'manasquan');assert.equal(bypass.finish,'atlantic-city');assert.ok(bypass.bridges.includes('route88'));assert.ok(!bypass.bridges.includes('route72'));assert.ok(bypass.colors.includes('#2769a1'));
+   const coverage=bypass.text.match(/Forecast coverage: (\d+)\/(\d+) weather route samples; marine wave data (\d+)\/(\d+)/);assert.ok(+coverage[4]>0&&+coverage[4]<+coverage[2],'waves sampled only on bounded ocean section');
+   await page.locator('#swap').click();await page.waitForFunction(()=>!calculating&&trip.start.key==='atlantic-city'&&document.getElementById('briefing').textContent.includes('Forecast coverage:'));
+   assert.equal(await page.evaluate(()=>trip.finish.key),'manasquan');assert.equal(await page.evaluate(()=>map.getZoom()),9);assert.equal(await page.evaluate(()=>map.getBearing()),45);
   }else{
    assert.match(text,/Largest forecast seas among route samples: .*ft near .*around .*E[DS]T/);
    assert.ok(await page.locator('#briefing').textContent().then(t=>t.includes(text)));
