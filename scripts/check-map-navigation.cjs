@@ -55,6 +55,13 @@ const base=process.env.PLANNER_TEST_URL||'http://127.0.0.1:8000';
   await page.evaluate(()=>{window.insetWheelZoomDone=false;map.once('zoomend',()=>window.insetWheelZoomDone=true);});
   await page.mouse.wheel(0,240);await page.waitForFunction(()=>window.insetWheelZoomDone&&map.getZoom()===10);
   assert.equal((await state()).bearing,45);assert.equal((await state()).count,1);
+  // Left-button dragging pans natively without clicking through to the full map.
+  const panBefore=await state();await page.mouse.move(previewBox.x+45,previewBox.y+previewBox.height-75);await page.mouse.down({button:'left'});
+  await page.mouse.move(previewBox.x+125,previewBox.y+previewBox.height-125,{steps:10});await page.mouse.up({button:'left'});await page.waitForTimeout(400);
+  const panAfter=await state();assert.ok(Math.abs(panAfter.lat-panBefore.lat)+Math.abs(panAfter.lng-panBefore.lng)>.0001,'drag changes map center');assert.equal(panAfter.preview,true,'drag does not return to full map');assert.equal(panAfter.zoom,10);assert.equal(panAfter.bearing,45);assert.deepEqual(await scrollPositions(),wheelScroll);
+  // A slow drag held longer than the inactivity interval must stay on screen.
+  await page.mouse.move(previewBox.x+45,previewBox.y+previewBox.height-75);await page.mouse.down({button:'left'});await page.mouse.move(previewBox.x+90,previewBox.y+previewBox.height-110,{steps:6});
+  await page.waitForTimeout(4200);assert.equal((await state()).preview,true,'active drag suspends timeout');await page.mouse.up({button:'left'});await page.waitForTimeout(200);
   await page.emulateMedia({reducedMotion:'no-preference'});
   await page.locator(first).last().evaluate(el=>el.click());await page.waitForTimeout(100);
   await page.locator(first).first().evaluate(el=>el.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true})));
@@ -67,7 +74,8 @@ const base=process.env.PLANNER_TEST_URL||'http://127.0.0.1:8000';
   const returnBox=await page.locator('.plannerMapPreview').boundingBox();await page.mouse.move(returnBox.x+returnBox.width/2,returnBox.y+returnBox.height/2);
   await page.waitForTimeout(2200);await page.mouse.wheel(0,-240);await page.waitForFunction(()=>map.getZoom()>10);
   const zoomed=(await state()).zoom;await page.waitForTimeout(2100);assert.equal((await state()).preview,true,'wheel restarts preview timer');
-  await page.locator('.plannerMapReturn').click();await page.waitForTimeout(100);assert.equal((await state()).zoom,zoomed,'return retains wheel zoom');
+  await page.evaluate(()=>{window.insetPanBeforeReturn=map.getCenter();});
+  await page.locator('.plannerMapReturn').click();await page.waitForTimeout(100);assert.equal((await state()).zoom,zoomed,'return retains wheel zoom');assert.ok(await page.evaluate(()=>map.latLngToContainerPoint(window.insetPanBeforeReturn).distanceTo(map.getSize().divideBy(2))<3),'return retains pan center');
 
   assert.equal((await state()).preview,false);assert.ok(await page.evaluate(()=>{const r=document.querySelector('.plannerMapSlot').getBoundingClientRect();return r.bottom>0&&r.top<innerHeight;}));
   await page.evaluate(()=>map.setView(map.getCenter(),10,{animate:false}));
