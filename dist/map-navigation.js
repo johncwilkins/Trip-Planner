@@ -6,7 +6,7 @@
   const preview=document.createElement('div');preview.className='plannerMapPreview';preview.hidden=true;
   const back=document.createElement('button');back.type='button';back.className='plannerMapReturn';back.textContent='Return to full map';
   const close=document.createElement('button');close.type='button';close.className='plannerMapClose';close.textContent='×';close.setAttribute('aria-label','Dismiss map preview');
-  document.body.append(preview);let timer,pulseTimer,ring,docked=false;
+  document.body.append(preview);let timer,ring,docked=false,hovering=false,moving=false;
   const reduced=()=>root.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const visible=()=>{
    const r=slot.getBoundingClientRect();let top=Math.max(0,r.top),bottom=Math.min(root.innerHeight,r.bottom),left=Math.max(0,r.left),right=Math.min(root.innerWidth,r.right);
@@ -15,13 +15,15 @@
   };
   function resize(){const center=map.getCenter();map.stop();map.invalidateSize({pan:false,animate:false});map.setView(center,map.getZoom(),{animate:false});}
   function position(){const panel=document.querySelector('.controlPanel'),r=panel?.getBoundingClientRect();preview.style.right=r&&r.left>root.innerWidth/2&&r.width<root.innerWidth/2&&r.bottom>0&&r.top<root.innerHeight?Math.max(12,root.innerWidth-r.left+12)+'px':'12px';}
-  function restore(){clearTimeout(timer);if(!docked)return;docked=false;slot.append(container);preview.hidden=true;slot.style.height='';resize();}
-  function dock(){if(docked)return;slot.style.height=slot.getBoundingClientRect().height+'px';docked=true;preview.hidden=false;preview.append(container,back,close);position();resize();}
+  function restore(){clearTimeout(timer);if(!docked)return;docked=false;hovering=false;moving=false;slot.append(container);preview.hidden=true;slot.style.height='';resize();}
+  function dock(){if(docked)return;slot.style.height=slot.getBoundingClientRect().height+'px';docked=true;preview.hidden=false;preview.append(container,back,close);position();hovering=root.matchMedia('(any-hover: hover)').matches&&preview.matches(':hover');resize();}
   back.onclick=()=>{restore();slot.scrollIntoView({behavior:reduced()?'instant':'smooth',block:'center'});};close.onclick=restore;
-  function keepVisible(){clearTimeout(timer);timer=setTimeout(restore,4000);}
+  function keepVisible(){clearTimeout(timer);if(docked&&!hovering&&!moving)timer=setTimeout(()=>{if(!hovering&&!moving)restore();},4000);}
+  preview.addEventListener('pointerenter',event=>{if(event.pointerType==='touch')return;hovering=true;clearTimeout(timer);});
+  preview.addEventListener('pointerleave',event=>{if(event.pointerType==='touch')return;hovering=false;if(docked)keepVisible();});
   // Keep the preview open during native Leaflet panning and zooming.
-  map.on('movestart zoomstart',()=>{if(docked)clearTimeout(timer);});
-  map.on('moveend zoomend',()=>{if(docked)keepVisible();});
+  map.on('movestart zoomstart',()=>{if(docked){moving=true;clearTimeout(timer);}});
+  map.on('moveend zoomend',()=>{if(docked){moving=false;keepVisible();}});
   container.addEventListener('wheel',()=>{if(docked)keepVisible();},{passive:true,capture:true});
   // Footer buttons pass wheel gestures to the same live map.
   preview.addEventListener('wheel',event=>{
@@ -34,14 +36,20 @@
   map.on('click',event=>{if(docked&&event.sourceTarget===map&&event.originalEvent&&!event.originalEvent.target.closest?.('.leaflet-interactive:not(canvas),.leaflet-marker-icon,.leaflet-popup,.leaflet-control'))back.onclick();});
   root.addEventListener('scroll',()=>{if(docked&&visible())restore();},{passive:true,capture:true});
   root.addEventListener('resize',()=>{if(docked){position();if(visible())restore();}});
+  function highlight(latlng){
+   const point=L.latLng(latlng);if(!Number.isFinite(point.lat)||!Number.isFinite(point.lng))return;
+   if(ring)map.removeLayer(ring);
+   ring=L.marker(point,{interactive:false,keyboard:false,zIndexOffset:1000,icon:L.divIcon({className:'plannerLocationPulse',html:'<span></span>',iconSize:[36,36],iconAnchor:[18,18]})}).addTo(map);
+  }
+  const highlightedLayers=new WeakSet();
+  map.on('layeradd',({layer})=>{if((layer instanceof L.Marker||layer instanceof L.CircleMarker)&&layer.options.interactive!==false&&!highlightedLayers.has(layer)){highlightedLayers.add(layer);layer.on('click',()=>highlight(layer.getLatLng()));}});
+  map.on('click',event=>{if(event.latlng&&!(event.sourceTarget instanceof L.Marker)&&!(event.sourceTarget instanceof L.CircleMarker))highlight(event.latlng);});
   function focus(latlng){
    const point=L.latLng(latlng);if(!Number.isFinite(point.lat)||!Number.isFinite(point.lng))return;
    if(visible())restore();else dock();
    map.stop();map.panTo(point,{animate:!reduced(),duration:.45});
    keepVisible();
-   clearTimeout(pulseTimer);if(ring)map.removeLayer(ring);
-   ring=L.marker(point,{interactive:false,keyboard:false,zIndexOffset:1000,icon:L.divIcon({className:'plannerLocationPulse',html:'<span></span>',iconSize:[36,36],iconAnchor:[18,18]})}).addTo(map);
-   pulseTimer=setTimeout(()=>{if(ring)map.removeLayer(ring);ring=null;},2400);
+   highlight(point);
   }
   document.addEventListener('click',event=>{const item=event.target.closest('[data-map-lat][data-map-lon]');if(item)focus([+item.dataset.mapLat,+item.dataset.mapLon]);});
   document.addEventListener('keydown',event=>{if((event.key==='Enter'||event.key===' ')&&event.target.matches('[data-map-lat][data-map-lon]')){event.preventDefault();event.target.click();}});
