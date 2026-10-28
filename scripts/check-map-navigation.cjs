@@ -55,6 +55,12 @@ const base=process.env.PLANNER_TEST_URL||'http://127.0.0.1:8000';
   await page.evaluate(()=>{window.insetWheelZoomDone=false;map.once('zoomend',()=>window.insetWheelZoomDone=true);});
   await page.mouse.wheel(0,240);await page.waitForFunction(()=>window.insetWheelZoomDone&&map.getZoom()===10);
   assert.equal((await state()).bearing,45);assert.equal((await state()).count,1);
+  // A stationary mouse must keep the inset open beyond the normal timeout.
+  await page.waitForTimeout(4300);assert.equal((await state()).preview,true,'stationary hover pauses timeout');assert.equal((await state()).ring,1,'last selected point stays highlighted');await page.emulateMedia({reducedMotion:'no-preference'});assert.equal(await page.locator('.plannerLocationPulse span').evaluate(el=>getComputedStyle(el).animationIterationCount),'infinite','inset highlight keeps flashing');await page.emulateMedia({reducedMotion:'reduce'});
+  const returnHover=await page.locator('.plannerMapReturn').boundingBox();await page.mouse.move(returnHover.x+returnHover.width/2,returnHover.y+returnHover.height/2);
+  await page.waitForTimeout(2100);assert.equal((await state()).preview,true,'hover over inset buttons also keeps it open');
+  await page.mouse.move(5,5);await page.waitForTimeout(2100);assert.equal((await state()).preview,true,'leaving starts a fresh countdown');
+  await page.mouse.move(previewBox.x+previewBox.width/2,previewBox.y+previewBox.height/2);await page.waitForTimeout(2100);assert.equal((await state()).preview,true,'reenter cancels pending timeout');
   // Left-button dragging pans natively without clicking through to the full map.
   const panBefore=await state();await page.mouse.move(previewBox.x+45,previewBox.y+previewBox.height-75);await page.mouse.down({button:'left'});
   await page.mouse.move(previewBox.x+125,previewBox.y+previewBox.height-125,{steps:10});await page.mouse.up({button:'left'});await page.waitForTimeout(400);
@@ -62,6 +68,7 @@ const base=process.env.PLANNER_TEST_URL||'http://127.0.0.1:8000';
   // A slow drag held longer than the inactivity interval must stay on screen.
   await page.mouse.move(previewBox.x+45,previewBox.y+previewBox.height-75);await page.mouse.down({button:'left'});await page.mouse.move(previewBox.x+90,previewBox.y+previewBox.height-110,{steps:6});
   await page.waitForTimeout(4200);assert.equal((await state()).preview,true,'active drag suspends timeout');await page.mouse.up({button:'left'});await page.waitForTimeout(200);
+  await page.mouse.move(5,5);
   await page.emulateMedia({reducedMotion:'no-preference'});
   await page.locator(first).last().evaluate(el=>el.click());await page.waitForTimeout(100);
   await page.locator(first).first().evaluate(el=>el.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true})));
@@ -69,11 +76,11 @@ const base=process.env.PLANNER_TEST_URL||'http://127.0.0.1:8000';
   await page.emulateMedia({reducedMotion:'reduce'});
   await page.waitForTimeout(2200);await page.locator(first).last().evaluate(el=>el.click());
   assert.equal((await state()).count,1);await page.waitForTimeout(2100);assert.equal((await state()).preview,true,'timer restarts');
-  await page.waitForTimeout(2100);assert.equal((await state()).preview,false,'inactivity hides preview');
+  await page.waitForTimeout(2100);assert.equal((await state()).preview,false,'inactivity hides preview');assert.equal((await state()).ring,1,'highlight remains after preview closes');
   await page.locator(first).first().evaluate(el=>el.click());
   const returnBox=await page.locator('.plannerMapPreview').boundingBox();await page.mouse.move(returnBox.x+returnBox.width/2,returnBox.y+returnBox.height/2);
   await page.waitForTimeout(2200);await page.mouse.wheel(0,-240);await page.waitForFunction(()=>map.getZoom()>10);
-  const zoomed=(await state()).zoom;await page.waitForTimeout(2100);assert.equal((await state()).preview,true,'wheel restarts preview timer');
+  const zoomed=(await state()).zoom;await page.mouse.move(5,5);await page.waitForTimeout(2100);assert.equal((await state()).preview,true,'preview remains during leave countdown after wheel zoom');
   await page.evaluate(()=>{window.insetPanBeforeReturn=map.getCenter();});
   await page.locator('.plannerMapReturn').click();await page.waitForTimeout(100);assert.equal((await state()).zoom,zoomed,'return retains wheel zoom');assert.ok(await page.evaluate(()=>map.latLngToContainerPoint(window.insetPanBeforeReturn).distanceTo(map.getSize().divideBy(2))<3),'return retains pan center');
 

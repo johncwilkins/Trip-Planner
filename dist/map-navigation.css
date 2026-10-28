@@ -10,3 +10,6 @@
 @keyframes plannerPulse{from{transform:scale(.45);opacity:1}to{transform:scale(1.6);opacity:0}}
 @media(max-width:650px){.plannerMapPreview{width:360px;height:280px}.plannerMapReturn{font-size:12px}}
 @media(prefers-reduced-motion:reduce){.plannerLocationPulse span{animation:none}}
+
+.plannerMapPreview .plannerLocationPulse span{animation-iteration-count:infinite}
+@media(prefers-reduced-motion:reduce){.plannerMapPreview .plannerLocationPulse span{animation:none}}
