@@ -1,7 +1,7 @@
 /* One live Leaflet map, temporarily docked when its original slot is offscreen. */
 (function(root){
  root.setupPlannerMapNavigation=function(map){
-  const container=map.getContainer(),originalInert=container.inert,slot=document.createElement('div');
+  const container=map.getContainer(),slot=document.createElement('div');
   slot.className='plannerMapSlot';container.before(slot);slot.append(container);
   const preview=document.createElement('div');preview.className='plannerMapPreview';preview.hidden=true;
   const back=document.createElement('button');back.type='button';back.className='plannerMapReturn';back.textContent='Return to full map';
@@ -15,17 +15,23 @@
   };
   function resize(){const center=map.getCenter();map.stop();map.invalidateSize({pan:false,animate:false});map.setView(center,map.getZoom(),{animate:false});}
   function position(){const panel=document.querySelector('.controlPanel'),r=panel?.getBoundingClientRect();preview.style.right=r&&r.left>root.innerWidth/2&&r.width<root.innerWidth/2&&r.bottom>0&&r.top<root.innerHeight?Math.max(12,root.innerWidth-r.left+12)+'px':'12px';}
-  function restore(){clearTimeout(timer);if(!docked)return;docked=false;container.inert=originalInert;slot.append(container);preview.hidden=true;slot.style.height='';resize();}
-  function dock(){if(docked)return;slot.style.height=slot.getBoundingClientRect().height+'px';docked=true;container.inert=true;preview.hidden=false;preview.append(container,back,close);position();resize();}
+  function restore(){clearTimeout(timer);if(!docked)return;docked=false;slot.append(container);preview.hidden=true;slot.style.height='';resize();}
+  function dock(){if(docked)return;slot.style.height=slot.getBoundingClientRect().height+'px';docked=true;preview.hidden=false;preview.append(container,back,close);position();resize();}
   back.onclick=()=>{restore();slot.scrollIntoView({behavior:reduced()?'instant':'smooth',block:'center'});};close.onclick=restore;
   function keepVisible(){clearTimeout(timer);timer=setTimeout(restore,4000);}
-  // Keep click-to-return while passing wheel gestures through the overlay to Leaflet.
+  // Keep the preview open during native Leaflet panning and zooming.
+  map.on('movestart zoomstart',()=>{if(docked)clearTimeout(timer);});
+  map.on('moveend zoomend',()=>{if(docked)keepVisible();});
+  container.addEventListener('wheel',()=>{if(docked)keepVisible();},{passive:true,capture:true});
+  // Footer buttons pass wheel gestures to the same live map.
   preview.addEventListener('wheel',event=>{
-   if(!docked||event.target===container)return;
+   if(!docked||container.contains(event.target))return;
    event.preventDefault();event.stopPropagation();keepVisible();
    container.dispatchEvent(new WheelEvent('wheel',{bubbles:true,cancelable:true,deltaX:event.deltaX,deltaY:event.deltaY,deltaZ:event.deltaZ,deltaMode:event.deltaMode,clientX:event.clientX,clientY:event.clientY,ctrlKey:event.ctrlKey,shiftKey:event.shiftKey,altKey:event.altKey,metaKey:event.metaKey}));
   },{passive:false});
-  back.title='Scroll to zoom; click to return to the full map';
+  back.title='Drag the map to pan; scroll to zoom; click here to return to the full map';
+  // Leaflet suppresses clicks after dragging; marker/route clicks keep their normal behavior.
+  map.on('click',event=>{if(docked&&event.sourceTarget===map&&event.originalEvent&&!event.originalEvent.target.closest?.('.leaflet-interactive:not(canvas),.leaflet-marker-icon,.leaflet-popup,.leaflet-control'))back.onclick();});
   root.addEventListener('scroll',()=>{if(docked&&visible())restore();},{passive:true,capture:true});
   root.addEventListener('resize',()=>{if(docked){position();if(visible())restore();}});
   function focus(latlng){
