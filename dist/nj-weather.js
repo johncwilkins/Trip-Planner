@@ -1,5 +1,5 @@
 (function(){
-const $=id=>document.getElementById(id),zones={inside:['ANZ452'],absecon:['ANZ452','ANZ453'],barnegat:['ANZ451','ANZ452','ANZ453']},base={inside:'Stay inside',absecon:'Ocean via Absecon ↔ Cape May',barnegat:'Ocean via Barnegat ↔ Cape May'},cache=new Map();let request=0;
+const $=id=>document.getElementById(id),zones={'barnegat-absecon':['ANZ451','ANZ452'],inside:['ANZ452'],absecon:['ANZ452','ANZ453'],barnegat:['ANZ451','ANZ452','ANZ453']},base={'barnegat-absecon':'Ocean via Barnegat ↔ Absecon',inside:'Stay inside',absecon:'Ocean via Absecon ↔ Cape May',barnegat:'Ocean via Barnegat ↔ Cape May'},cache=new Map();let request=0;
 const civil=t=>new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(t));
 function shift(date,days){const x=new Date(date+'T12:00:00Z');x.setUTCDate(x.getUTCDate()+days);return x.toISOString().slice(0,10);}
 function periodFor(d,date,time){const updated=civil(d.properties.updated),hour=Number((time||'12:00').slice(0,2)),night=hour>=18||hour<6,target=hour<6?shift(date,-1):date,weekday=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];return d.properties.periods.find(p=>{const name=p.name.toLowerCase(),isNight=/night|tonight|overnight/.test(name);let day;if(/today|tonight|this afternoon|this evening|overnight/.test(name))day=updated;else if(/tomorrow/.test(name))day=shift(updated,1);else{let ix=weekday.findIndex(w=>name.startsWith(w.toLowerCase()));if(ix<0)return false;let days=(ix-new Date(updated+'T12:00Z').getUTCDay()+7)%7;day=shift(updated,days);}return day===target&&isNight===night;});}
@@ -20,7 +20,7 @@ async function update(){
  const zonesReady=updateZones();
  if(!selected||!selectedRoute){box.textContent='Choose a valid passage to see weather along the trip.';await zonesReady;return;}
  try{
-  const points=PassageWeather.samples({start:selected.departure,end:selected.end,from:selected.start.distance,to:selected.finish.distance,eta:selected.eta,position:s=>NJTide.position(selectedRoute,s),nameAt:p=>selectedRoute.endpoints.reduce((a,b)=>((a.lat-p.lat)**2+(a.lon-p.lon)**2)<((b.lat-p.lat)**2+(b.lon-p.lon)**2)?a:b).name,marineAt:s=>selectedRoute.routeKey!=='inside'&&s<selectedRoute.oceanJoinNm});
+  const points=PassageWeather.samples({start:selected.departure,end:selected.end,from:selected.start.distance,to:selected.finish.distance,eta:selected.eta,position:s=>NJTide.position(selectedRoute,s),nameAt:p=>selectedRoute.endpoints.reduce((a,b)=>((a.lat-p.lat)**2+(a.lon-p.lon)**2)<((b.lat-p.lat)**2+(b.lon-p.lon)**2)?a:b).name,marineAt:s=>NJPlanning.isOcean(selectedRoute,s)});
   const forecasts=await PassageWeather.collect(points);
   if(n!==request||trip!==selected||route!==selectedRoute)return;
   const format=t=>new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',month:'short',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'}).format(t);
