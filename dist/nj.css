@@ -58,3 +58,7 @@ header{position:relative;background:white;color:#143345;border-bottom:0;padding-
 .boatSetup .boatControls{border:0;margin:12px 0 0;padding:0;background:transparent}
 .boatSetup .boatControls>legend{font-size:13px;margin-bottom:6px}
 .boatSetup #boatSpeedHint{font-size:13px;line-height:1.45;margin:6px 0 10px!important}
+
+/* Selected location stays marked when pointer/focus moves to the map. */
+.stationRowsLink.stationRowSelected{background:#d5eee8;box-shadow:inset 4px 0 #087c72;outline:2px solid #087c72;outline-offset:-2px}
+.stationRowsLink.stationRowSelected.lowWaterRow{background:#ffe4d2;box-shadow:inset 4px 0 #b13e27;outline-color:#b13e27}
