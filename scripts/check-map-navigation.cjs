@@ -9,7 +9,7 @@ const base=process.env.PLANNER_TEST_URL||'http://127.0.0.1:8000';
   const page=await browser.newPage({viewport:{width,height:900},reducedMotion:'reduce'}),errors=[];
   page.on('pageerror',e=>errors.push(e.message));
   // External charts/weather are optional. Test saved local data deterministically.
-  await page.route('https://**',route=>route.abort());
+  await page.route('**/*',route=>route.request().url().startsWith(base+'/')?route.continue():route.abort());
   await page.goto(base+'/'+planner+'.html');
   await page.waitForFunction(()=>typeof trip!=='undefined'&&trip&&!document.getElementById('useBest').disabled);
   await page.evaluate(()=>{map.setView(map.getCenter(),10,{animate:false});map.setBearing(45);document.getElementById('map').scrollIntoView({block:'center',behavior:'instant'});});
@@ -46,6 +46,15 @@ const base=process.env.PLANNER_TEST_URL||'http://127.0.0.1:8000';
   const before=await state();await page.locator(first).first().evaluate(el=>el.click());current=await state();
   assert.equal(current.preview,true);assert.equal(current.count,1);assert.equal(current.zoom,10);assert.equal(current.bearing,45);assert.equal(current.layers,before.layers);assert.ok(await page.locator('.plannerMapPreview').evaluate(el=>{const r=el.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth&&r.top>=0&&r.bottom<=innerHeight;}),'preview stays inside viewport');assert.ok(await page.locator('.plannerMapPreview').evaluate(el=>el.getBoundingClientRect().width>=Math.min(360,innerWidth-24)),'preview is substantially larger');
   await page.waitForTimeout(100);const scrollBeforeFocus=(await state()).scroll;await page.evaluate(()=>map.plannerFocus(map.getCenter()));assert.equal((await state()).scroll,scrollBeforeFocus,'navigation does not scroll the page');
+  // Real wheel input passes through the return overlay to the live Leaflet map.
+  const previewBox=await page.locator('.plannerMapPreview').boundingBox(),scrollPositions=()=>page.evaluate(()=>({page:scrollY,panel:document.querySelector('.visuals').scrollTop}));
+  const wheelScroll=await scrollPositions();await page.mouse.move(previewBox.x+previewBox.width/2,previewBox.y+previewBox.height/2);
+  await page.evaluate(()=>{window.insetWheelZoomDone=false;map.once('zoomend',()=>window.insetWheelZoomDone=true);});
+  await page.mouse.wheel(0,-240);await page.waitForFunction(()=>window.insetWheelZoomDone&&map.getZoom()>10);
+  assert.equal((await state()).bearing,45);assert.equal((await state()).preview,true);assert.deepEqual(await scrollPositions(),wheelScroll,'wheel zoom does not scroll the page or panel');
+  await page.evaluate(()=>{window.insetWheelZoomDone=false;map.once('zoomend',()=>window.insetWheelZoomDone=true);});
+  await page.mouse.wheel(0,240);await page.waitForFunction(()=>window.insetWheelZoomDone&&map.getZoom()===10);
+  assert.equal((await state()).bearing,45);assert.equal((await state()).count,1);
   await page.emulateMedia({reducedMotion:'no-preference'});
   await page.locator(first).last().evaluate(el=>el.click());await page.waitForTimeout(100);
   await page.locator(first).first().evaluate(el=>el.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',bubbles:true})));
@@ -54,8 +63,14 @@ const base=process.env.PLANNER_TEST_URL||'http://127.0.0.1:8000';
   await page.waitForTimeout(2200);await page.locator(first).last().evaluate(el=>el.click());
   assert.equal((await state()).count,1);await page.waitForTimeout(2100);assert.equal((await state()).preview,true,'timer restarts');
   await page.waitForTimeout(2100);assert.equal((await state()).preview,false,'inactivity hides preview');
-  await page.locator(first).first().evaluate(el=>el.click());await page.locator('.plannerMapReturn').click();await page.waitForTimeout(100);
+  await page.locator(first).first().evaluate(el=>el.click());
+  const returnBox=await page.locator('.plannerMapPreview').boundingBox();await page.mouse.move(returnBox.x+returnBox.width/2,returnBox.y+returnBox.height/2);
+  await page.waitForTimeout(2200);await page.mouse.wheel(0,-240);await page.waitForFunction(()=>map.getZoom()>10);
+  const zoomed=(await state()).zoom;await page.waitForTimeout(2100);assert.equal((await state()).preview,true,'wheel restarts preview timer');
+  await page.locator('.plannerMapReturn').click();await page.waitForTimeout(100);assert.equal((await state()).zoom,zoomed,'return retains wheel zoom');
+
   assert.equal((await state()).preview,false);assert.ok(await page.evaluate(()=>{const r=document.querySelector('.plannerMapSlot').getBoundingClientRect();return r.bottom>0&&r.top<innerHeight;}));
+  await page.evaluate(()=>map.setView(map.getCenter(),10,{animate:false}));
   // Existing map click inspection and endpoint dropdown recalculation still work.
   await page.evaluate(()=>{map.fire('click',{latlng:map.getCenter()});const group=typeof routeLayer==='undefined'?layers:routeLayer;const marker=Object.values(group._layers).find(l=>l instanceof L.CircleMarker&&l._events?.click);if(marker)marker.fire('click');});
   for(const id of ['start','finish']){

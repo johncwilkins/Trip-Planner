@@ -18,13 +18,21 @@
   function restore(){clearTimeout(timer);if(!docked)return;docked=false;container.inert=originalInert;slot.append(container);preview.hidden=true;slot.style.height='';resize();}
   function dock(){if(docked)return;slot.style.height=slot.getBoundingClientRect().height+'px';docked=true;container.inert=true;preview.hidden=false;preview.append(container,back,close);position();resize();}
   back.onclick=()=>{restore();slot.scrollIntoView({behavior:reduced()?'instant':'smooth',block:'center'});};close.onclick=restore;
+  function keepVisible(){clearTimeout(timer);timer=setTimeout(restore,4000);}
+  // Keep click-to-return while passing wheel gestures through the overlay to Leaflet.
+  preview.addEventListener('wheel',event=>{
+   if(!docked||event.target===container)return;
+   event.preventDefault();event.stopPropagation();keepVisible();
+   container.dispatchEvent(new WheelEvent('wheel',{bubbles:true,cancelable:true,deltaX:event.deltaX,deltaY:event.deltaY,deltaZ:event.deltaZ,deltaMode:event.deltaMode,clientX:event.clientX,clientY:event.clientY,ctrlKey:event.ctrlKey,shiftKey:event.shiftKey,altKey:event.altKey,metaKey:event.metaKey}));
+  },{passive:false});
+  back.title='Scroll to zoom; click to return to the full map';
   root.addEventListener('scroll',()=>{if(docked&&visible())restore();},{passive:true,capture:true});
   root.addEventListener('resize',()=>{if(docked){position();if(visible())restore();}});
   function focus(latlng){
    const point=L.latLng(latlng);if(!Number.isFinite(point.lat)||!Number.isFinite(point.lng))return;
    if(visible())restore();else dock();
    map.stop();map.panTo(point,{animate:!reduced(),duration:.45});
-   clearTimeout(timer);timer=setTimeout(restore,4000);
+   keepVisible();
    clearTimeout(pulseTimer);if(ring)map.removeLayer(ring);
    ring=L.marker(point,{interactive:false,keyboard:false,zIndexOffset:1000,icon:L.divIcon({className:'plannerLocationPulse',html:'<span></span>',iconSize:[36,36],iconAnchor:[18,18]})}).addTo(map);
    pulseTimer=setTimeout(()=>{if(ring)map.removeLayer(ring);ring=null;},2400);
