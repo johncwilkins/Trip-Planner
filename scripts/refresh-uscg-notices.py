@@ -59,10 +59,10 @@ def main():
     # published C&D-to-Nantucket course and retain only located records.
     coast_path=ROOT/'dist/nj/currents-uscg-notices.json'
     coast_prior=dict(notices=prior.get('coastalNotices',[]),lastCompleteAt=prior.get('coastalLastCompleteAt'))
-    coastal=node("const U=require('./dist/uscg-notices.js'),P=require('./dist/engine.js');let s='';process.stdin.on('data',x=>s+=x);process.stdin.on('end',()=>{const d=JSON.parse(s),route=P.routes.coast.points.map(p=>[p.lon,p.lat]);const n=d.batches.flatMap(b=>b.features.map(f=>U.normalize(f,b.file))).filter(n=>n&&n.geometry&&U.nearRoute(n.geometry,route,5));process.stdout.write(JSON.stringify(U.merge(n)));});",dict(batches=batches))
+    coastal=node("const U=require('./dist/uscg-notices.js'),P=require('./dist/engine.js');let s='';process.stdin.on('data',x=>s+=x);process.stdin.on('end',()=>{const d=JSON.parse(s),route=P.routes.coast.points.map(p=>[p.lon,p.lat]),li=require('./dist/li-route.json').map(p=>[p[1],p[0]]);const n=d.batches.flatMap(b=>b.features.map(f=>U.normalize(f,b.file))).filter(n=>n&&n.geometry&&(U.nearRoute(n.geometry,route,5)||U.nearRoute(n.geometry,li,5)));process.stdout.write(JSON.stringify(U.merge(n)));});",dict(batches=batches))
     coastal=node("const U=require('./dist/uscg-notices.js');let s='';process.stdin.on('data',x=>s+=x);process.stdin.on('end',()=>{const d=JSON.parse(s);process.stdout.write(JSON.stringify(U.trackChanges(U.merge(d.notices),d.prior,d.now)));});",dict(notices=coastal+[n for n in coast_prior.get('notices',[]) if n['sourceUrl'] in failed_urls],prior=coast_prior.get('notices',[]),now=now))
-    coast_out=dict(schemaVersion=1,source='USCG NAVCEN geographic Local Notice to Mariners / MSI files',sourceUrl='https://www.navcen.uscg.gov/msi',retrievedAt=now,refreshCadenceDays=7,complete=not failed,lastCompleteAt=now if not failed else coast_prior.get('lastCompleteAt'),unavailableFiles=failed,coverage='Located notices within five nautical miles of the C&D-to-Nantucket planning course; unlocated district notices excluded',files=files,notices=coastal)
-    out['coastalNotices']=coastal;out['coastalCoverage']=coast_out['coverage'];out['coastalLastCompleteAt']=coast_out['lastCompleteAt']
+    coast_out=dict(schemaVersion=1,source='USCG NAVCEN geographic Local Notice to Mariners / MSI files',sourceUrl='https://www.navcen.uscg.gov/msi',retrievedAt=now,refreshCadenceDays=7,complete=not failed,lastCompleteAt=now if not failed else coast_prior.get('lastCompleteAt'),unavailableFiles=failed,coverage='Located notices within five nautical miles of the C&D-to-Nantucket and Long Island south shore planning courses; unlocated district notices excluded',files=files,notices=coastal)
+    out['longIslandIncluded']=True;out['coastalNotices']=coastal;out['coastalCoverage']=coast_out['coverage'];out['coastalLastCompleteAt']=coast_out['lastCompleteAt']
     tmp=p.with_suffix('.tmp');tmp.write_text(json.dumps(out,separators=(',',':')));tmp.replace(p)
     print(f'Coast Guard snapshot saved: {len(files)} source files, {len(notices)} regional notices; {len(failed)} unavailable files; {now}',flush=True)
     write_status('complete' if not failed else 'partial',unavailableFiles=failed)
@@ -75,3 +75,4 @@ if __name__=='__main__':
         write_status('failed',error=str(e))
         print('Coast Guard refresh failed; prior snapshot preserved: '+str(e),file=sys.stderr)
         sys.exit(1)
+
