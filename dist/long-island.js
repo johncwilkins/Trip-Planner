@@ -31,9 +31,11 @@ const fmt=t=>new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',weekda
 function eastern(date,time){let p=(date+'T'+time).split(/[-T:]/).map(Number),target=Date.UTC(p[0],p[1]-1,p[2],p[3],p[4]),t=target,f=new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'});for(let i=0;i<5;i++){let x=Object.fromEntries(f.formatToParts(t).map(y=>[y.type,y.value]));let delta=target-Date.UTC(+x.year,+x.month-1,+x.day,+x.hour,+x.minute);t+=delta;if(!delta)return t;}throw Error('This local time does not exist. Choose another departure time.');}
 function pos(s){let i=route.findIndex(p=>p[2]>=s);if(i<0)i=route.length-1;if(i===0)return route[0].slice(0,2);let a=route[i-1],b=route[i],f=(s-a[2])/(b[2]-a[2]);return [a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f];}
 let personalAdjustments=[],comparisonReport=null;
-const knownSlowZones=[[66.39,67.09]];
-function durationBase(a,b,speed,slow){return PlannerSlowZones.duration(a,b,speed,slow,PlannerSlowZones.slowRanges(bridges,knownSlowZones),[[8.02,21.78,10.4]]);}
-function durationBetween(a,b,speed,slow){let low=Math.min(a,b),high=Math.max(a,b),base=durationBase(a,b,speed,slow),restricted=[...PlannerSlowZones.slowRanges(bridges,knownSlowZones),...[[8.02,21.78]]];for(const x of personalAdjustments){let from=Math.max(low,x.startNm),to=Math.min(high,x.endNm);if(to>from){const bounded=restricted.some(([l,r])=>from<r&&to>l);base+=durationBase(from,to,speed,slow)*((bounded?Math.max(1,x.factor):x.factor)-1);}}return base;}
+// Approximate intersections with the user-supplied red/yellow speed map.
+// Distances are nautical miles from East Rockaway; image boundaries are approximate.
+const knownSlowZones=[[0.2,0.9],[3.7,10.35],[11.9,13.3],[15.35,16.4],[19.15,19.7],[56.45,57.55],[58.35,60.35],[64.2,64.6]];
+function durationBase(a,b,speed,slow){return PlannerSlowZones.duration(a,b,speed,slow,PlannerSlowZones.slowRanges(bridges,knownSlowZones),[]);}
+function durationBetween(a,b,speed,slow){let low=Math.min(a,b),high=Math.max(a,b),base=durationBase(a,b,speed,slow),restricted=PlannerSlowZones.slowRanges(bridges,knownSlowZones);for(const x of personalAdjustments){let from=Math.max(low,x.startNm),to=Math.min(high,x.endNm);if(to>from){const bounded=restricted.some(([l,r])=>from<r&&to>l);base+=durationBase(from,to,speed,slow)*((bounded?Math.max(1,x.factor):x.factor)-1);}}return base;}
 function personalKey(){let a=endpoints.find(x=>x[0]===$('start').value),b=endpoints.find(x=>x[0]===$('finish').value);return 'li-personal-timing-'+(a&&b&&a[2]>b[2]?'westbound':'eastbound');}
 function loadPersonal(){try{let v=JSON.parse(localStorage.getItem(personalKey())||'[]');personalAdjustments=v.filter(x=>Number.isFinite(x.startNm)&&Number.isFinite(x.endNm)&&x.endNm>x.startNm&&x.factor>=.5&&x.factor<=2);}catch(e){personalAdjustments=[];}}
 
