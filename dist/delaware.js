@@ -20,7 +20,8 @@ function eastern(date,time){let p=(date+'T'+time).split(/[-T:]/).map(Number),tar
 function pos(s){let i=route.findIndex(p=>p[2]>=s);if(i<0)i=route.length-1;if(i===0)return route[0].slice(0,2);let a=route[i-1],b=route[i],f=(s-a[2])/(b[2]-a[2]);return [a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f];}
 let personalAdjustments=[],comparisonReport=null;
 // Approximate red/yellow portions of the supplied speed map; nautical miles from Cape May.
-const knownSlowZones=[[17.965,19.82],[22.4,24.924]];
+// Masseys Ditch: user-identified no-wake stretch, projected from USCG charted R16 / G17B.
+const knownSlowZones=[[17.965,19.82],[22.4,24.924],[29.09549,29.88413]];
 function durationBase(a,b,speed,slow){return PlannerSlowZones.duration(a,b,speed,slow,PlannerSlowZones.slowRanges(bridges,knownSlowZones),[[17.965,24.924,3.4759],[0,3.73,5],[30.5,31.7159,5]]);}
 function durationBetween(a,b,speed,slow){let low=Math.min(a,b),high=Math.max(a,b),base=durationBase(a,b,speed,slow),restricted=[...PlannerSlowZones.slowRanges(bridges,knownSlowZones),...[[17.965,24.924],[0,3.73],[30.5,31.7159]]];for(const x of personalAdjustments){let from=Math.max(low,x.startNm),to=Math.min(high,x.endNm);if(to>from){const bounded=restricted.some(([l,r])=>from<r&&to>l);base+=durationBase(from,to,speed,slow)*((bounded?Math.max(1,x.factor):x.factor)-1);}}return base;}
 function personalKey(){let a=endpoints.find(x=>x[0]===$('start').value),b=endpoints.find(x=>x[0]===$('finish').value);return 'delaware-personal-timing-'+(a&&b&&a[2]>b[2]?'westbound':'eastbound');}
