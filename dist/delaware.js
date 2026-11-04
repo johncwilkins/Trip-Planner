@@ -8,10 +8,9 @@ const stationAt=s=>tideStations.reduce((a,b)=>Math.abs(a.s-s)<=Math.abs(b.s-s)?a
 const colorTide=h=>h===null?'#758e9e':h<.5?'#cf733f':h<1.5?'#af9b52':h<2.5?'#2b8c93':'#078675';
 const bridges=[
 {name:'NJ Route 109 bridge',s:0.521,id:'Cape109',clearance:55,mhw:5.01,station:'8536110',movable:false},
-{name:'Cape May railroad bridge',s:1.328,id:'CapeRail',clearance:4,mhw:5.01,station:'8536110',movable:true,alwaysOpen:true},
+{name:'Cape May railroad bridge',s:1.18,id:'CapeRail',clearance:4,mhw:5.01,station:'8536110',movable:true,alwaysOpen:true},
 {name:'Seashore Road bridge · approximate position',s:1.35,id:'Seashore',clearance:55,mhw:5.01,station:'8536110',movable:false},
 {name:'Savannah Road Bridge',s:19.116,id:'Savannah',clearance:15,mhw:4.23,station:'8557380',movable:true,noticeHours:4},
-{name:'Lewes railroad bridge',s:19.36,id:'LewesRail',clearance:10,mhw:4.23,station:'8557380',movable:true,alwaysOpen:true},
 {name:'US 9 bridge',s:19.42,id:'US9',clearance:35,mhw:4.23,station:'8557380',movable:false},
 {name:'Rehoboth Avenue Bridge',s:23.970,id:'Rehoboth',clearance:16,mhw:null,station:'8558690',movable:true,noticeHours:24},
 {name:'State Route 1 bridge',s:24.573,id:'Route1',clearance:35,mhw:null,station:'8558690',movable:false}];
@@ -22,8 +21,8 @@ function pos(s){let i=route.findIndex(p=>p[2]>=s);if(i<0)i=route.length-1;if(i==
 let personalAdjustments=[],comparisonReport=null;
 // Approximate red/yellow portions of the supplied speed map; nautical miles from Cape May.
 const knownSlowZones=[[17.965,19.82],[22.4,24.924]];
-function durationBase(a,b,speed,slow){return PlannerSlowZones.duration(a,b,speed,slow,PlannerSlowZones.slowRanges(bridges,knownSlowZones),[[17.965,19.82,3.4759],[22.4,24.924,3.4759],[0,3.73,8],[30.5,31.7159,5]]);}
-function durationBetween(a,b,speed,slow){let low=Math.min(a,b),high=Math.max(a,b),base=durationBase(a,b,speed,slow),restricted=[...PlannerSlowZones.slowRanges(bridges,knownSlowZones),...[[0,3.73],[30.5,31.7159]]];for(const x of personalAdjustments){let from=Math.max(low,x.startNm),to=Math.min(high,x.endNm);if(to>from){const bounded=restricted.some(([l,r])=>from<r&&to>l);base+=durationBase(from,to,speed,slow)*((bounded?Math.max(1,x.factor):x.factor)-1);}}return base;}
+function durationBase(a,b,speed,slow){return PlannerSlowZones.duration(a,b,speed,slow,PlannerSlowZones.slowRanges(bridges,knownSlowZones),[[17.965,24.924,3.4759],[0,3.73,5],[30.5,31.7159,5]]);}
+function durationBetween(a,b,speed,slow){let low=Math.min(a,b),high=Math.max(a,b),base=durationBase(a,b,speed,slow),restricted=[...PlannerSlowZones.slowRanges(bridges,knownSlowZones),...[[17.965,24.924],[0,3.73],[30.5,31.7159]]];for(const x of personalAdjustments){let from=Math.max(low,x.startNm),to=Math.min(high,x.endNm);if(to>from){const bounded=restricted.some(([l,r])=>from<r&&to>l);base+=durationBase(from,to,speed,slow)*((bounded?Math.max(1,x.factor):x.factor)-1);}}return base;}
 function personalKey(){let a=endpoints.find(x=>x[0]===$('start').value),b=endpoints.find(x=>x[0]===$('finish').value);return 'delaware-personal-timing-'+(a&&b&&a[2]>b[2]?'westbound':'eastbound');}
 function loadPersonal(){try{let v=JSON.parse(localStorage.getItem(personalKey())||'[]');personalAdjustments=v.filter(x=>Number.isFinite(x.startNm)&&Number.isFinite(x.endNm)&&x.endNm>x.startNm&&x.factor>=.5&&x.factor<=2);}catch(e){personalAdjustments=[];}}
 
